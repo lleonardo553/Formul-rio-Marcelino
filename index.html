@@ -3,87 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcelino Forms | Sistema Global</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Marcelino Forms | Sistema Profissional de Cadastro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #ec4899;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --bg-hover: #334155;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
+            /* Design System - Glassmorphism Professional */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.06);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+            
+            /* Cores de Acento - Gradiente Roxo/Azul Premium */
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #ec4899;
             --success: #10b981;
-            --danger: #ef4444;
             --warning: #f59e0b;
+            --danger: #ef4444;
             --info: #3b82f6;
-            --glass: rgba(30, 41, 59, 0.8);
+            
+            /* Texto */
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            
+            /* Efeitos */
+            --blur-sm: blur(8px);
+            --blur-md: blur(16px);
+            --blur-lg: blur(24px);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            
+            /* Animações */
+            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
+            min-height: 100vh;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Background Animado Profissional */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 70%),
+                var(--bg-primary);
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .animated-bg {
+        .noise-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #1e293b);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            pointer-events: none;
         }
 
-        header {
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 1rem 2rem;
+        /* Glassmorphism Base */
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: var(--blur-md);
+            -webkit-backdrop-filter: var(--blur-md);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-card);
+        }
+
+        /* Header Profissional */
+        .header {
             position: sticky;
             top: 0;
             z-index: 100;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: var(--blur-lg);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -93,11 +119,24 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
         }
 
         .header-actions {
@@ -106,143 +145,109 @@
             align-items: center;
         }
 
-        .sync-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .badge {
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid var(--glass-border);
+            background: var(--surface);
         }
 
-        .sync-status.online {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid var(--success);
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
             color: var(--success);
         }
 
-        .sync-status.offline {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid var(--danger);
-            color: var(--danger);
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--warning);
         }
 
-        .sync-status.local {
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid var(--info);
-            color: var(--info);
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid rgba(255,255,255,0.2);
-            color: white;
-        }
-
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.4);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #dc2626);
-            color: white;
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--success), #059669);
-            color: white;
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), #d97706);
-            color: white;
-        }
-
-        .container {
-            max-width: 1200px;
+        /* Container Principal */
+        .main-container {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 3rem 2rem;
         }
 
+        /* Grid Layout Profissional */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 320px 1fr;
+            }
+        }
+
+        /* Cards Glassmorphism */
         .card {
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: var(--blur-md);
+            border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 2.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.6s ease-out;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 2rem;
+            box-shadow: var(--shadow-card);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), var(--shadow-glow);
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .card-header {
-            margin-bottom: 2rem;
-            text-align: center;
+            margin-bottom: 1.5rem;
         }
 
-        .card-header h2 {
-            font-size: 2rem;
-            font-weight: 700;
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, white, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .card-header p {
+        .card-subtitle {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 0.9rem;
         }
 
+        /* Formulário Premium */
         .form-group {
             margin-bottom: 1.5rem;
             position: relative;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
             margin-bottom: 0.5rem;
+            font-size: 0.875rem;
             font-weight: 500;
             color: var(--text-secondary);
-            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -251,196 +256,398 @@
             position: relative;
         }
 
-        .input-wrapper i {
+        .input-icon {
             position: absolute;
             left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-secondary);
+            color: var(--text-muted);
+            transition: color var(--transition-fast);
+            z-index: 2;
         }
 
-        input, select, textarea {
+        .form-input {
             width: 100%;
             padding: 14px 16px 14px 48px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 2px solid rgba(255,255,255,0.1);
+            background: var(--bg-tertiary);
+            border: 2px solid var(--glass-border);
             border-radius: 12px;
-            color: white;
+            color: var(--text-primary);
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all var(--transition-fast);
+            font-family: 'Inter', sans-serif;
         }
 
-        input:focus, select:focus, textarea:focus {
+        .form-input:focus {
             outline: none;
-            border-color: var(--primary);
-            background: rgba(15, 23, 42, 0.8);
+            border-color: var(--accent-primary);
+            background: var(--bg-secondary);
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
 
-        input.error {
-            border-color: var(--danger);
-            animation: shake 0.5s;
+        .form-input:focus + .input-icon,
+        .input-wrapper:focus-within .input-icon {
+            color: var(--accent-primary);
         }
 
-        input.success {
-            border-color: var(--success);
-        }
-
-        textarea {
-            padding-left: 16px;
-            min-height: 120px;
-            font-family: monospace;
-            resize: vertical;
-        }
-
-        .error-message, .success-message {
-            font-size: 0.85rem;
-            margin-top: 6px;
-            display: none;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .error-message { color: var(--danger); }
-        .success-message { color: var(--success); }
-        .error-message.show, .success-message.show { display: flex; }
-
-        select {
-            cursor: pointer;
+        select.form-input {
             appearance: none;
+            cursor: pointer;
+            padding-right: 40px;
         }
 
-        .input-wrapper::after {
-            content: '\f107';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
+        .select-arrow {
             position: absolute;
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-secondary);
+            color: var(--text-muted);
             pointer-events: none;
         }
 
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 2rem;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 6px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
+        /* Estados de Validação */
+        .form-input.error {
+            border-color: var(--danger);
+            animation: shake 0.5s;
         }
 
-        .tab {
-            flex: 1;
-            padding: 12px 24px;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 12px;
-            transition: all 0.3s;
+        .form-input.success {
+            border-color: var(--success);
+        }
+
+        .validation-message {
             display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+            font-size: 0.875rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all var(--transition-fast);
+        }
+
+        .validation-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .validation-message.error {
+            color: var(--danger);
+        }
+
+        .validation-message.success {
+            color: var(--success);
+        }
+
+        /* Botões Premium */
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
         }
 
-        .tab.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
         }
 
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--surface-hover);
+            border-color: var(--glass-highlight);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+            background: var(--surface);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* Dashboard Pessoal - Pós Cadastro */
+        .profile-hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+            position: relative;
+            z-index: 1;
+            border: 4px solid var(--bg-primary);
+        }
+
+        .profile-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            color: var(--success);
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .profile-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-meta {
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Grid de Informações */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            background: var(--surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all var(--transition-fast);
+        }
+
+        .info-item:hover {
+            background: var(--surface-hover);
+            transform: translateY(-2px);
+        }
+
+        .info-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            gap: 1rem;
             margin-bottom: 2rem;
         }
 
         .stat-card {
-            background: rgba(15, 23, 42, 0.6);
-            padding: 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
             border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-            transition: transform 0.3s;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03));
+            pointer-events: none;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
         }
 
         .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
 
-        .stat-card:nth-child(1) .stat-icon { background: rgba(99, 102, 241, 0.2); color: var(--primary); }
-        .stat-card:nth-child(2) .stat-icon { background: rgba(16, 185, 129, 0.2); color: var(--success); }
-        .stat-card:nth-child(3) .stat-icon { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
-        .stat-card:nth-child(4) .stat-icon { background: rgba(236, 72, 153, 0.2); color: var(--secondary); }
+        .stat-icon.purple { background: rgba(99, 102, 241, 0.1); color: var(--accent-primary); }
+        .stat-icon.green { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .stat-icon.orange { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .stat-icon.pink { background: rgba(236, 72, 153, 0.1); color: var(--accent-tertiary); }
 
         .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
         }
 
         .stat-label {
+            font-size: 0.875rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
         }
 
+        /* Lista de Usuários Admin */
         .users-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-height: 500px;
+            gap: 0.75rem;
+            max-height: 600px;
             overflow-y: auto;
             padding-right: 8px;
         }
 
         .users-list::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         .users-list::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.3);
-            border-radius: 4px;
+            background: var(--bg-tertiary);
+            border-radius: 3px;
         }
 
         .users-list::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
+            background: var(--glass-border);
+            border-radius: 3px;
+        }
+
+        .users-list::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
         }
 
         .user-item {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            transition: all var(--transition-fast);
             cursor: pointer;
-            transition: all 0.3s;
-            animation: slideIn 0.4s ease-out;
         }
 
         .user-item:hover {
-            background: rgba(99, 102, 241, 0.1);
-            border-color: var(--primary);
-            transform: translateX(5px);
+            background: var(--surface-hover);
+            border-color: var(--glass-highlight);
+            transform: translateX(4px);
         }
 
         .user-info {
@@ -449,25 +656,27 @@
             gap: 12px;
         }
 
-        .user-avatar {
+        .user-avatar-sm {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 600;
+            font-size: 0.875rem;
         }
 
         .user-details h4 {
             font-weight: 600;
             margin-bottom: 2px;
+            font-size: 0.95rem;
         }
 
         .user-details span {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
 
         .user-actions {
@@ -476,42 +685,42 @@
         }
 
         .icon-btn {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 8px;
             border: none;
-            background: rgba(255,255,255,0.1);
-            color: white;
+            background: transparent;
+            color: var(--text-secondary);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            transition: all var(--transition-fast);
         }
 
         .icon-btn:hover {
-            background: var(--primary);
-            transform: scale(1.1);
+            background: var(--glass);
+            color: var(--text-primary);
         }
 
         .icon-btn.delete:hover {
-            background: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
         }
 
+        /* Modais Premium */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: var(--blur-md);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity var(--transition-base);
+            padding: 2rem;
         }
 
         .modal-overlay.active {
@@ -520,41 +729,66 @@
         }
 
         .modal {
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 2.5rem;
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s;
+            max-width: 500px;
+            width: 100%;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95) translateY(20px);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
         }
 
         .modal-overlay.active .modal {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
         }
 
         .modal-icon {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--success), #059669);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
-            font-size: 2.5rem;
-            animation: pulse 2s infinite;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .modal-icon.success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
+            color: var(--success);
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .modal-icon.warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.05));
+            color: var(--warning);
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
         }
 
         .modal h3 {
-            font-size: 1.75rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
             margin-bottom: 1rem;
         }
 
         .modal p {
+            text-align: center;
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
             line-height: 1.6;
@@ -564,87 +798,34 @@
             display: flex;
             gap: 12px;
             justify-content: center;
-            flex-wrap: wrap;
         }
 
-        .login-container {
-            min-height: calc(100vh - 80px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-card {
-            width: 100%;
-            max-width: 450px;
-        }
-
-        .login-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 2rem;
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .search-box {
-            position: relative;
-            width: 300px;
-        }
-
-        .search-box input {
-            padding-left: 48px;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-secondary);
-        }
-
+        /* Toast Notifications */
         .toast-container {
             position: fixed;
             top: 100px;
-            right: 20px;
+            right: 2rem;
             z-index: 1001;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            pointer-events: none;
         }
 
         .toast {
-            background: var(--bg-card);
-            border-left: 4px solid var(--primary);
-            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-left: 4px solid var(--accent-primary);
             border-radius: 12px;
+            padding: 1rem 1.5rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             gap: 12px;
             animation: slideInRight 0.4s ease-out;
+            pointer-events: all;
             min-width: 300px;
+            backdrop-filter: var(--blur-md);
         }
 
         @keyframes slideInRight {
@@ -655,481 +836,492 @@
         .toast.success { border-left-color: var(--success); }
         .toast.error { border-left-color: var(--danger); }
         .toast.warning { border-left-color: var(--warning); }
-        .toast.info { border-left-color: var(--info); }
 
-        .chart-container {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255,255,255,0.1);
+        /* Animações */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 8px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 4px;
-            transition: width 0.6s ease;
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out;
         }
 
-        .hidden {
-            display: none !important;
-        }
+        /* Utilitários */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 1rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .w-full { width: 100%; }
 
-        .fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .sync-code-section {
-            background: rgba(15, 23, 42, 0.8);
-            border: 2px dashed var(--info);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            text-align: left;
-        }
-
-        .sync-code-section h4 {
-            color: var(--info);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .code-display {
-            background: rgba(0,0,0,0.5);
-            border-radius: 8px;
-            padding: 1rem;
-            font-family: monospace;
-            font-size: 0.8rem;
-            word-break: break-all;
-            max-height: 150px;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-            color: var(--success);
-        }
-
-        .mode-selector {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 2rem;
-            justify-content: center;
-        }
-
-        .mode-btn {
-            padding: 12px 24px;
-            border: 2px solid rgba(255,255,255,0.2);
-            background: transparent;
-            color: white;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
-
-        .mode-btn.active {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-
+        /* Responsividade */
         @media (max-width: 768px) {
-            .container { padding: 1rem; }
+            .main-container { padding: 1.5rem; }
             .card { padding: 1.5rem; }
+            .header { padding: 1rem; }
+            .header-content { flex-wrap: wrap; gap: 1rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .search-box { width: 100%; }
+            .profile-name { font-size: 1.5rem; }
+        }
+
+        /* Loading States */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            background: var(--surface);
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+            font-size: 0.875rem;
+        }
+
+        .tab.active {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Search */
+        .search-box {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 48px;
+            background: var(--surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
-    <div class="animated-bg"></div>
+    <div class="ambient-bg"></div>
+    <div class="noise-overlay"></div>
     <div class="toast-container" id="toastContainer"></div>
 
-    <header>
-        <div class="brand">
-            <i class="fas fa-layer-group"></i>
-            <span>Marcelino Forms</span>
-        </div>
-        <div class="header-actions">
-            <div class="sync-status local" id="syncStatus" onclick="showSyncModal()" title="Clique para sincronizar">
-                <i class="fas fa-exchange-alt"></i>
-                <span>Modo Código</span>
+    <!-- Header Profissional -->
+    <header class="header">
+        <div class="header-content">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <span>Marcelino Forms</span>
             </div>
-            <button class="btn btn-primary" onclick="showLogin()" id="admBtn">
-                <i class="fas fa-lock"></i> ADM
-            </button>
-            <button class="btn btn-outline hidden" onclick="logout()" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i> Sair
-            </button>
+            <div class="header-actions">
+                <div class="badge badge-success" id="systemStatus">
+                    <i class="fas fa-shield-alt" style="margin-right: 6px;"></i>
+                    Sistema Ativo
+                </div>
+                <button class="btn btn-ghost" onclick="showLogin()" id="admBtn">
+                    <i class="fas fa-lock"></i> Administrador
+                </button>
+                <button class="btn btn-ghost hidden" onclick="logout()" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
         </div>
     </header>
 
-    <div class="container">
-        <!-- FORMULÁRIO -->
-        <div id="formPage" class="card">
-            <div class="card-header">
-                <h2><i class="fas fa-user-plus" style="color: var(--primary);"></i> Cadastro</h2>
-                <p>Sistema anti-duplicata ativo - sincronização via código</p>
-            </div>
-
-            <div class="mode-selector">
-                <button class="mode-btn active" onclick="setMode('local')" id="btnLocal">
-                    <i class="fas fa-mobile-alt"></i> Este Dispositivo
-                </button>
-                <button class="mode-btn" onclick="setMode('sync')" id="btnSync">
-                    <i class="fas fa-globe"></i> Sincronizar
-                </button>
-            </div>
-
-            <form id="form">
-                <div class="form-group">
-                    <label>Nome Completo <span style="color: var(--danger);">*</span></label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="nome" required placeholder="Digite seu nome completo" autocomplete="off">
+    <main class="main-container">
+        <!-- PÁGINA DO FORMULÁRIO (Primeiro Acesso) -->
+        <div id="formPage" class="animate-fade-in">
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <div class="card-header text-center">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);">
+                        <i class="fas fa-user-plus"></i>
                     </div>
-                    <div class="error-message" id="nomeError">
-                        <i class="fas fa-times-circle"></i>
-                        <span>Este nome já está cadastrado!</span>
+                    <h1 class="card-title" style="justify-content: center; font-size: 1.75rem;">Novo Cadastro</h1>
+                    <p class="card-subtitle">Preencha suas informações para participar</p>
+                </div>
+
+                <form id="form">
+                    <div class="form-group">
+                        <label class="form-label">Nome Completo *</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="nome" class="form-input" required placeholder="Digite seu nome completo" autocomplete="name">
+                        </div>
+                        <div class="validation-message error" id="nomeError">
+                            <i class="fas fa-times-circle"></i>
+                            <span>Este nome já está cadastrado no sistema</span>
+                        </div>
+                        <div class="validation-message success" id="nomeSuccess">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Nome disponível para cadastro</span>
+                        </div>
                     </div>
-                    <div class="success-message" id="nomeSuccess">
+
+                    <div class="form-group">
+                        <label class="form-label">Data de Nascimento *</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-calendar-alt input-icon"></i>
+                            <input type="date" id="nasc" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Ano Escolar *</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-graduation-cap input-icon"></i>
+                            <select id="ano" class="form-input" required>
+                                <option value="">Selecione seu ano</option>
+                                <option>6º ano</option>
+                                <option>7º ano</option>
+                                <option>8º ano</option>
+                                <option>9º ano</option>
+                                <option>1º EM</option>
+                                <option>2º EM</option>
+                                <option>3º EM</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Plataforma de Estudo *</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-laptop input-icon"></i>
+                            <select id="cmsp" class="form-input" required>
+                                <option value="">Selecione a plataforma</option>
+                                <option>Sala do Futuro</option>
+                                <option>CMSP</option>
+                                <option>Nenhum</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Conhece o Marcelino? *</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-question-circle input-icon"></i>
+                            <select id="marcelino" class="form-input" required>
+                                <option value="">Selecione uma opção</option>
+                                <option>Sim</option>
+                                <option>Não</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block mt-4" id="submitBtn" style="padding: 14px;">
                         <i class="fas fa-check-circle"></i>
-                        <span>Nome disponível</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Data de Nascimento</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-calendar-alt"></i>
-                        <input type="date" id="nasc" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Ano Escolar</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-graduation-cap"></i>
-                        <select id="ano" required>
-                            <option value="">Selecione</option>
-                            <option>6º ano</option>
-                            <option>7º ano</option>
-                            <option>8º ano</option>
-                            <option>9º ano</option>
-                            <option>1º EM</option>
-                            <option>2º EM</option>
-                            <option>3º EM</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Plataforma</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-laptop"></i>
-                        <select id="cmsp" required>
-                            <option value="">Selecione</option>
-                            <option>Sala do Futuro</option>
-                            <option>CMSP</option>
-                            <option>Nenhum</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Conhece o Marcelino?</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-question-circle"></i>
-                        <select id="marcelino" required>
-                            <option value="">Selecione</option>
-                            <option>Sim</option>
-                            <option>Não</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.1rem;" id="submitBtn">
-                    <i class="fas fa-save"></i> Salvar Cadastro
-                </button>
-            </form>
+                        Confirmar Cadastro
+                    </button>
+                </form>
+            </div>
         </div>
 
-        <!-- LOGIN -->
-        <div id="loginPage" class="login-container hidden">
-            <div class="card login-card">
-                <div class="login-icon">
-                    <i class="fas fa-shield-alt"></i>
+        <!-- DASHBOARD PESSOAL (Após Cadastro) -->
+        <div id="dashboardPage" class="hidden animate-fade-in">
+            <div class="profile-hero">
+                <div class="profile-avatar" id="userAvatar">M</div>
+                <div class="profile-status">
+                    <i class="fas fa-check-circle"></i> Cadastro Confirmado
                 </div>
+                <h1 class="profile-name" id="dashboardName">Marcelino</h1>
+                <p class="profile-meta" id="dashboardMeta">Cadastro realizado em <span id="dashboardDate">--/--/----</span></p>
+            </div>
+
+            <div class="card">
                 <div class="card-header">
-                    <h2>Acesso Restrito</h2>
+                    <h2 class="card-title">
+                        <i class="fas fa-id-card" style="color: var(--accent-primary);"></i>
+                        Suas Informações
+                    </h2>
+                    <p class="card-subtitle">Dados registrados no sistema</p>
                 </div>
+
+                <div class="info-grid" id="infoGrid">
+                    <!-- Preenchido via JS -->
+                </div>
+
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); text-align: center;">
+                    <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
+                        <i class="fas fa-info-circle"></i> Você já possui um cadastro ativo. Para alterar dados, contate o administrador.
+                    </p>
+                    <button class="btn btn-outline" onclick="window.print()">
+                        <i class="fas fa-print"></i> Imimir Comprovante
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGIN ADMIN -->
+        <div id="loginPage" class="hidden animate-fade-in">
+            <div class="card" style="max-width: 450px; margin: 0 auto;">
+                <div class="text-center mb-6">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2rem; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h1 class="card-title" style="justify-content: center; font-size: 1.75rem;">Acesso Restrito</h1>
+                    <p class="card-subtitle">Área administrativa do sistema</p>
+                </div>
+
                 <form onsubmit="handleLogin(event)">
                     <div class="form-group">
+                        <label class="form-label">Usuário</label>
                         <div class="input-wrapper">
-                            <i class="fas fa-user-shield"></i>
-                            <input type="text" id="user" required placeholder="Usuário">
+                            <i class="fas fa-user-shield input-icon"></i>
+                            <input type="text" id="user" class="form-input" required placeholder="Digite o usuário">
                         </div>
                     </div>
+
                     <div class="form-group">
+                        <label class="form-label">Senha</label>
                         <div class="input-wrapper">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="pass" required placeholder="Senha">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="pass" class="form-input" required placeholder="Digite a senha">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-sign-in-alt"></i> Entrar
+
+                    <button type="submit" class="btn btn-primary btn-block mt-4">
+                        <i class="fas fa-sign-in-alt"></i> Entrar no Sistema
                     </button>
-                    <button type="button" class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;" onclick="showForm()">
+                    
+                    <button type="button" class="btn btn-outline btn-block mt-4" onclick="checkExistingRegistration()">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- ADMIN -->
-        <div id="adminPage" class="hidden">
+        <!-- PAINEL ADMINISTRATIVO -->
+        <div id="adminPage" class="hidden animate-fade-in">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-header">
+                        <div class="stat-icon purple"><i class="fas fa-users"></i></div>
+                        <i class="fas fa-ellipsis-h" style="color: var(--text-muted); cursor: pointer;"></i>
+                    </div>
                     <div class="stat-value" id="totalUsers">0</div>
-                    <div class="stat-label">Total</div>
+                    <div class="stat-label">Total de Cadastros</div>
                 </div>
+                
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
+                    <div class="stat-header">
+                        <div class="stat-icon green"><i class="fas fa-calendar-day"></i></div>
+                    </div>
                     <div class="stat-value" id="todayUsers">0</div>
-                    <div class="stat-label">Hoje</div>
+                    <div class="stat-label">Cadastros Hoje</div>
                 </div>
+                
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-eye"></i></div>
+                    <div class="stat-header">
+                        <div class="stat-icon orange"><i class="fas fa-eye"></i></div>
+                    </div>
                     <div class="stat-value" id="knowMarcelino">0%</div>
-                    <div class="stat-label">Conhecem</div>
+                    <div class="stat-label">Conhecem Marcelino</div>
                 </div>
+                
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-laptop-code"></i></div>
+                    <div class="stat-header">
+                        <div class="stat-icon pink"><i class="fas fa-laptop-code"></i></div>
+                    </div>
                     <div class="stat-value" id="usePlatform">0%</div>
                     <div class="stat-label">Usam Plataforma</div>
                 </div>
             </div>
 
-            <div class="card" style="margin-bottom: 2rem;">
-                <h3 style="margin-bottom: 1rem;"><i class="fas fa-sync" style="color: var(--info);"></i> Sincronização entre Dispositivos</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
-                    Como não temos servidor próprio, use este sistema de código para transferir dados entre dispositivos.
-                </p>
-                
-                <div class="sync-code-section">
-                    <h4><i class="fas fa-download"></i> Exportar Dados (Gerar Código)</h4>
-                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Copie este código e cole em outro dispositivo:</p>
-                    <div class="code-display" id="exportCode">Nenhum dado para exportar</div>
-                    <button class="btn btn-success" onclick="generateExportCode()">
-                        <i class="fas fa-code"></i> Gerar Código de Exportação
-                    </button>
-                </div>
-
-                <div class="sync-code-section">
-                    <h4><i class="fas fa-upload"></i> Importar Dados (Colar Código)</h4>
-                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Cole o código de outro dispositivo aqui:</p>
-                    <textarea id="importCode" placeholder="Cole aqui o código recebido..."></textarea>
-                    <button class="btn btn-warning" onclick="importFromCode()" style="margin-top: 0.5rem;">
-                        <i class="fas fa-file-import"></i> Importar Código
-                    </button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="dashboard-header">
-                    <div>
-                        <h2>Registros</h2>
-                        <p style="color: var(--text-secondary);">Gerencie todos os cadastros</p>
+            <div class="dashboard-grid">
+                <div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-chart-pie" style="color: var(--accent-secondary);"></i>
+                                Distribuição
+                            </h2>
+                        </div>
+                        <div id="chartsContent">
+                            <!-- Charts via JS -->
+                        </div>
                     </div>
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h2 class="card-title">
+                                    <i class="fas fa-list" style="color: var(--accent-primary);"></i>
+                                    Registros
+                                </h2>
+                                <p class="card-subtitle">Gerencie todos os cadastros</p>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-outline" onclick="exportCSV()" title="Exportar CSV">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn btn-outline" onclick="confirmReset()" style="color: var(--danger); border-color: rgba(239, 68, 68, 0.3);" title="Limpar Tudo">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="filterUsers()">
+                            <input type="text" id="searchInput" placeholder="Buscar por nome..." onkeyup="filterUsers()">
                         </div>
-                        <button class="btn btn-success" onclick="exportAllData()">
-                            <i class="fas fa-download"></i> CSV
-                        </button>
-                        <button class="btn btn-danger" onclick="confirmReset()">
-                            <i class="fas fa-trash-alt"></i> Limpar
-                        </button>
+
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab('all', this)">Todos</button>
+                            <button class="tab" onclick="switchTab('today', this)">Hoje</button>
+                            <button class="tab" onclick="switchTab('week', this)">Semana</button>
+                        </div>
+
+                        <div id="usersList" class="users-list">
+                            <!-- Lista via JS -->
+                        </div>
                     </div>
                 </div>
-
-                <div class="tabs">
-                    <button class="tab active" onclick="switchTab('all', this)">Todos</button>
-                    <button class="tab" onclick="switchTab('today', this)">Hoje</button>
-                    <button class="tab" onclick="switchTab('week', this)">Semana</button>
-                </div>
-
-                <div id="usersList" class="users-list"></div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- MODAL DE SINCRONIZAÇÃO -->
-    <div id="syncModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal">
-            <div class="modal-icon" style="background: linear-gradient(135deg, var(--info), #2563eb);">
-                <i class="fas fa-sync"></i>
-            </div>
-            <h3>Sincronizar Dispositivos</h3>
-            <p>Escolha como deseja sincronizar seus dados:</p>
-            
-            <div style="text-align: left; margin: 1.5rem 0;">
-                <div class="sync-code-section">
-                    <h4><i class="fas fa-share-alt"></i> Modo 1: Código de Transferência</h4>
-                    <p style="font-size: 0.85rem;">Gere um código neste dispositivo e importe em outro.</p>
-                    <button class="btn btn-primary" onclick="showAdmin(); closeModalDirect();" style="width: 100%;">
-                        Ir para Painel de Sincronização
-                    </button>
-                </div>
-                
-                <div class="sync-code-section" style="margin-top: 1rem;">
-                    <h4><i class="fas fa-info-circle"></i> Status Atual</h4>
-                    <p id="syncStatusText" style="font-size: 0.85rem; color: var(--text-secondary);">
-                        Modo Local Ativo<br>
-                        Dados salvos apenas neste dispositivo.<br>
-                        Use o código acima para transferir.
-                    </p>
-                </div>
-            </div>
-            
-            <button class="btn btn-outline" onclick="closeModalDirect()">Fechar</button>
-        </div>
-    </div>
-
-    <!-- MODAIS DE SUCESSO/ERRO -->
+    <!-- Modal de Sucesso -->
     <div id="successModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal">
-            <div class="modal-icon">
+            <div class="modal-icon success">
                 <i class="fas fa-check"></i>
             </div>
-            <h3>Cadastro Salvo!</h3>
-            <p>Os dados foram salvos localmente.</p>
+            <h3>Cadastro Realizado!</h3>
+            <p>Seus dados foram salvos com sucesso. Você pode visualizar suas informações agora.</p>
             <div class="modal-actions">
-                <a href="https://leozinho.erbystore.com/" target="_blank" class="btn btn-success" style="text-decoration: none;">
-                    <i class="fas fa-store"></i> Loja
-                </a>
-                <button class="btn btn-outline" onclick="closeModalDirect()">Fechar</button>
+                <button class="btn btn-primary" onclick="showDashboard(); closeModalDirect();">
+                    <i class="fas fa-id-card"></i> Ver Meu Cadastro
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- Modal de Confirmação -->
     <div id="confirmModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal">
-            <div class="modal-icon" style="background: linear-gradient(135deg, var(--danger), #dc2626);">
+            <div class="modal-icon warning">
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
-            <h3>Confirmar</h3>
+            <h3>Atenção</h3>
             <p id="confirmText">Tem certeza?</p>
             <div class="modal-actions">
-                <button class="btn btn-danger" id="confirmBtn">Confirmar</button>
                 <button class="btn btn-outline" onclick="closeModalDirect()">Cancelar</button>
+                <button class="btn btn-primary" id="confirmBtn" style="background: var(--danger);">
+                    Confirmar
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        // CONFIGURAÇÃO
+        // Configuração
         const CONFIG = {
             adminUser: 'Marcelino',
             adminPass: 'Leonardo@24.',
-            storageKey: 'marcelino_forms_data',
+            storageKey: 'marcelino_forms_v2',
             sessionKey: 'marcelino_session',
-            syncMode: 'local' // 'local' ou 'sync'
+            deviceKey: 'marcelino_device_id'
         };
 
         let allUsers = [];
         let currentTab = 'all';
         let nomeValido = false;
+        let currentUser = null;
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
-            setupNomeValidation();
-            checkSession();
-            updateSyncStatus();
+            checkExistingRegistration();
+            setupValidation();
+            
+            // Verificar sessão admin
+            if (sessionStorage.getItem(CONFIG.sessionKey) === 'active') {
+                showAdmin();
+            }
         });
 
-        // SISTEMA ANTI-DUPLICATA
-        function normalizeNome(nome) {
-            if (!nome) return '';
-            return nome
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
-                .replace(/\s+/g, '')
-                .replace(/[^\w]/g, '');
+        // Gerar ID único do dispositivo
+        function getDeviceId() {
+            let deviceId = localStorage.getItem(CONFIG.deviceKey);
+            if (!deviceId) {
+                deviceId = 'dev_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem(CONFIG.deviceKey, deviceId);
+            }
+            return deviceId;
         }
 
-        function checkDuplicate(nomeInput) {
-            const nomeDigitado = nomeInput.value.trim();
-            if (!nomeDigitado) {
-                resetValidation();
-                return;
-            }
-
-            const normalizedInput = normalizeNome(nomeDigitado);
-            const duplicate = allUsers.find(user => 
-                normalizeNome(user.nome) === normalizedInput
-            );
-
-            const inputEl = document.getElementById('nome');
-            const errorEl = document.getElementById('nomeError');
-            const successEl = document.getElementById('nomeSuccess');
-            const submitBtn = document.getElementById('submitBtn');
-
-            if (duplicate) {
-                inputEl.classList.add('error');
-                inputEl.classList.remove('success');
-                errorEl.classList.add('show');
-                successEl.classList.remove('show');
-                submitBtn.disabled = true;
-                nomeValido = false;
+        // Verificar se já existe cadastro neste dispositivo
+        function checkExistingRegistration() {
+            const deviceId = getDeviceId();
+            const existing = allUsers.find(u => u.deviceId === deviceId);
+            
+            if (existing) {
+                currentUser = existing;
+                showDashboard();
             } else {
-                inputEl.classList.remove('error');
-                inputEl.classList.add('success');
-                errorEl.classList.remove('show');
-                successEl.classList.add('show');
-                submitBtn.disabled = false;
-                nomeValido = true;
+                showForm();
             }
         }
 
-        function resetValidation() {
-            const inputEl = document.getElementById('nome');
-            inputEl.classList.remove('error', 'success');
-            document.getElementById('nomeError').classList.remove('show');
-            document.getElementById('nomeSuccess').classList.remove('show');
-            document.getElementById('submitBtn').disabled = false;
-            nomeValido = false;
-        }
-
-        function setupNomeValidation() {
-            const nomeInput = document.getElementById('nome');
-            nomeInput.addEventListener('input', (e) => {
-                clearTimeout(window.validateTimeout);
-                window.validateTimeout = setTimeout(() => {
-                    checkDuplicate(e.target);
-                }, 500);
-            });
-            nomeInput.addEventListener('blur', (e) => {
-                checkDuplicate(e.target);
-            });
-        }
-
-        // GERENCIAMENTO DE DADOS
+        // Carregar dados
         function loadData() {
             const data = localStorage.getItem(CONFIG.storageKey);
             if (data) {
@@ -1137,194 +1329,128 @@
             }
         }
 
+        // Salvar dados
         function saveData() {
             localStorage.setItem(CONFIG.storageKey, JSON.stringify(allUsers));
-            updateSyncStatus();
         }
 
-        // FORMULÁRIO
-        async function getIP() {
-            try {
-                const res = await fetch('https://api.ipify.org?format=json');
-                const data = await res.json();
-                return data.ip;
-            } catch (e) {
-                return 'local';
+        // Sistema Anti-Duplicata Avançado
+        function normalizeText(text) {
+            if (!text) return '';
+            return text
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]/g, '');
+        }
+
+        function checkDuplicate(nome) {
+            const normalized = normalizeText(nome);
+            return allUsers.find(u => normalizeText(u.nome) === normalized);
+        }
+
+        function setupValidation() {
+            const nomeInput = document.getElementById('nome');
+            
+            nomeInput.addEventListener('input', (e) => {
+                clearTimeout(window.validateTimeout);
+                window.validateTimeout = setTimeout(() => {
+                    validateNome(e.target.value);
+                }, 300);
+            });
+        }
+
+        function validateNome(value) {
+            const input = document.getElementById('nome');
+            const error = document.getElementById('nomeError');
+            const success = document.getElementById('nomeSuccess');
+            const btn = document.getElementById('submitBtn');
+            
+            if (!value.trim()) {
+                resetValidation();
+                return;
+            }
+
+            const duplicate = checkDuplicate(value);
+            
+            if (duplicate) {
+                input.classList.add('error');
+                input.classList.remove('success');
+                error.classList.add('show');
+                success.classList.remove('show');
+                btn.disabled = true;
+                nomeValido = false;
+            } else {
+                input.classList.remove('error');
+                input.classList.add('success');
+                error.classList.remove('show');
+                success.classList.add('show');
+                btn.disabled = false;
+                nomeValido = true;
             }
         }
 
+        function resetValidation() {
+            document.getElementById('nome').classList.remove('error', 'success');
+            document.getElementById('nomeError').classList.remove('show');
+            document.getElementById('nomeSuccess').classList.remove('show');
+            document.getElementById('submitBtn').disabled = false;
+            nomeValido = false;
+        }
+
+        // Submissão do Formulário
         document.getElementById('form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const nomeInput = document.getElementById('nome');
-            checkDuplicate(nomeInput);
+            const nome = document.getElementById('nome').value.trim();
             
-            if (!nomeValido) {
-                showToast('Nome já cadastrado!', 'error');
-                nomeInput.focus();
+            // Validação final
+            if (!nomeValido || checkDuplicate(nome)) {
+                showToast('Nome já cadastrado no sistema', 'error');
+                document.getElementById('nome').focus();
                 return;
             }
 
             const btn = this.querySelector('button[type="submit"]');
-            const originalHTML = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+            btn.innerHTML = '<span class="loading-spinner"></span> Processando...';
             btn.disabled = true;
 
             try {
-                const ip = await getIP();
                 const newUser = {
                     id: Date.now(),
-                    nome: document.getElementById('nome').value.trim(),
+                    deviceId: getDeviceId(),
+                    nome: nome,
                     nascimento: document.getElementById('nasc').value,
                     ano: document.getElementById('ano').value,
                     cmsp: document.getElementById('cmsp').value,
                     marcelino: document.getElementById('marcelino').value,
-                    ip: ip,
-                    horario: new Date().toISOString(),
-                    dataCadastro: new Date().toLocaleDateString('pt-BR')
+                    dataCadastro: new Date().toISOString(),
+                    dataFormatada: new Date().toLocaleDateString('pt-BR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })
                 };
-
-                // Verificação dupla
-                const normalizedNew = normalizeNome(newUser.nome);
-                const exists = allUsers.some(u => normalizeNome(u.nome) === normalizedNew);
-                
-                if (exists) {
-                    showToast('Nome duplicado detectado!', 'error');
-                    checkDuplicate(nomeInput);
-                    return;
-                }
 
                 allUsers.unshift(newUser);
                 saveData();
+                currentUser = newUser;
                 
                 showSuccessModal();
                 this.reset();
                 resetValidation();
-                showToast('Cadastro salvo com sucesso!', 'success');
                 
             } catch (error) {
-                showToast('Erro ao salvar', 'error');
+                showToast('Erro ao salvar cadastro', 'error');
             } finally {
-                btn.innerHTML = originalHTML;
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar Cadastro';
                 btn.disabled = false;
             }
         });
 
-        // SINCRONIZAÇÃO VIA CÓDIGO
-        function generateExportCode() {
-            if (allUsers.length === 0) {
-                showToast('Nenhum dado para exportar', 'warning');
-                return;
-            }
-
-            const data = {
-                users: allUsers,
-                exportedAt: new Date().toISOString(),
-                version: '1.0'
-            };
-
-            // Compactar dados
-            const jsonString = JSON.stringify(data);
-            const encoded = btoa(unescape(encodeURIComponent(jsonString)));
-            
-            document.getElementById('exportCode').textContent = encoded;
-            showToast('Código gerado! Copie e envie para outro dispositivo.', 'success');
-            
-            // Auto-selecionar para fácil cópia
-            const range = document.createRange();
-            range.selectNode(document.getElementById('exportCode'));
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-        }
-
-        function importFromCode() {
-            const code = document.getElementById('importCode').value.trim();
-            
-            if (!code) {
-                showToast('Cole um código válido', 'error');
-                return;
-            }
-
-            try {
-                // Decodificar
-                const jsonString = decodeURIComponent(escape(atob(code)));
-                const data = JSON.parse(jsonString);
-
-                if (!data.users || !Array.isArray(data.users)) {
-                    throw new Error('Formato inválido');
-                }
-
-                // Mesclar dados (evitar duplicatas)
-                let importedCount = 0;
-                let duplicateCount = 0;
-
-                data.users.forEach(importedUser => {
-                    const normalizedImported = normalizeNome(importedUser.nome);
-                    const exists = allUsers.some(existing => 
-                        normalizeNome(existing.nome) === normalizedImported
-                    );
-
-                    if (!exists) {
-                        allUsers.push(importedUser);
-                        importedCount++;
-                    } else {
-                        duplicateCount++;
-                    }
-                });
-
-                saveData();
-                
-                if (importedCount > 0) {
-                    showToast(`${importedCount} cadastro(s) importado(s)!`, 'success');
-                    if (!document.getElementById('adminPage').classList.contains('hidden')) {
-                        renderUsers();
-                        updateStats();
-                    }
-                }
-                
-                if (duplicateCount > 0) {
-                    showToast(`${duplicateCount} já existiam e foram ignorados.`, 'warning');
-                }
-
-                document.getElementById('importCode').value = '';
-                
-            } catch (error) {
-                console.error(error);
-                showToast('Código inválido ou corrompido!', 'error');
-            }
-        }
-
-        // UI FUNCTIONS
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            const icons = {
-                success: 'check-circle',
-                error: 'times-circle',
-                warning: 'exclamation-circle',
-                info: 'info-circle'
-            };
-            
-            toast.innerHTML = `<i class="fas fa-${icons[type]}"></i><span>${message}</span>`;
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 4000);
-        }
-
-        function setMode(mode) {
-            CONFIG.syncMode = mode;
-            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(mode === 'local' ? 'btnLocal' : 'btnSync').classList.add('active');
-            
-            if (mode === 'sync') {
-                showAdmin();
-            }
-        }
-
+        // Navegação
         function showForm() {
             hideAllPages();
             document.getElementById('formPage').classList.remove('hidden');
@@ -1332,138 +1458,157 @@
             document.getElementById('logoutBtn').classList.add('hidden');
         }
 
+        function showDashboard() {
+            hideAllPages();
+            document.getElementById('dashboardPage').classList.remove('hidden');
+            document.getElementById('admBtn').classList.remove('hidden');
+            document.getElementById('logoutBtn').classList.add('hidden');
+            renderDashboard();
+        }
+
         function showLogin() {
             hideAllPages();
             document.getElementById('loginPage').classList.remove('hidden');
-            document.getElementById('loginPage').classList.add('fade-in');
         }
 
         function showAdmin() {
             hideAllPages();
             document.getElementById('adminPage').classList.remove('hidden');
-            document.getElementById('adminPage').classList.add('fade-in');
             document.getElementById('admBtn').classList.add('hidden');
             document.getElementById('logoutBtn').classList.remove('hidden');
-            renderUsers();
-            updateStats();
+            renderAdmin();
         }
 
         function hideAllPages() {
-            ['formPage', 'loginPage', 'adminPage'].forEach(id => {
+            ['formPage', 'dashboardPage', 'loginPage', 'adminPage'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
-                document.getElementById(id).classList.remove('fade-in');
             });
         }
 
-        function handleLogin(e) {
-            e.preventDefault();
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-
-            if (u === CONFIG.adminUser && p === CONFIG.adminPass) {
-                sessionStorage.setItem(CONFIG.sessionKey, 'active');
-                showToast('Bem-vindo!', 'success');
-                showAdmin();
-                document.getElementById('user').value = '';
-                document.getElementById('pass').value = '';
-            } else {
-                showToast('Credenciais incorretas!', 'error');
-            }
-        }
-
-        function logout() {
-            sessionStorage.removeItem(CONFIG.sessionKey);
-            showToast('Logout realizado', 'success');
-            showForm();
-        }
-
-        function checkSession() {
-            if (sessionStorage.getItem(CONFIG.sessionKey) === 'active') {
-                showAdmin();
-            }
-        }
-
-        function updateSyncStatus() {
-            const el = document.getElementById('syncStatus');
-            const count = allUsers.length;
-            el.innerHTML = `<i class="fas fa-database"></i><span>${count} regs</span>`;
-        }
-
-        // ADMIN
-        function renderUsers() {
-            const list = document.getElementById('usersList');
-            const search = document.getElementById('searchInput').value.toLowerCase();
+        // Renderizar Dashboard Pessoal
+        function renderDashboard() {
+            if (!currentUser) return;
             
-            let filtered = allUsers.filter(u => u.nome.toLowerCase().includes(search));
+            document.getElementById('userAvatar').textContent = currentUser.nome.charAt(0).toUpperCase();
+            document.getElementById('dashboardName').textContent = currentUser.nome;
+            document.getElementById('dashboardDate').textContent = currentUser.dataFormatada;
             
-            const hoje = new Date().toLocaleDateString('pt-BR');
-            if (currentTab === 'today') {
-                filtered = filtered.filter(u => u.dataCadastro === hoje);
-            } else if (currentTab === 'week') {
-                const weekAgo = new Date();
-                weekAgo.setDate(weekAgo.getDate() - 7);
-                filtered = filtered.filter(u => new Date(u.horario) >= weekAgo);
-            }
-
-            if (filtered.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>Nenhum registro</h3>
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = filtered.map(user => `
-                <div class="user-item" data-id="${user.id}">
-                    <div class="user-info">
-                        <div class="user-avatar">${user.nome.charAt(0).toUpperCase()}</div>
-                        <div class="user-details">
-                            <h4>${user.nome}</h4>
-                            <span>${user.ano} | ${new Date(user.horario).toLocaleString('pt-BR')}</span>
-                        </div>
-                    </div>
-                    <div class="user-actions">
-                        <button class="icon-btn" onclick="viewUser(${user.id})" title="Ver"><i class="fas fa-eye"></i></button>
-                        <button class="icon-btn delete" onclick="deleteUser(${user.id})" title="Excluir"><i class="fas fa-trash"></i></button>
+            const infoGrid = document.getElementById('infoGrid');
+            infoGrid.innerHTML = `
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-calendar"></i> Nascimento</div>
+                    <div class="info-value">${formatDate(currentUser.nascimento)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-graduation-cap"></i> Ano Escolar</div>
+                    <div class="info-value">${currentUser.ano}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-laptop"></i> Plataforma</div>
+                    <div class="info-value">${currentUser.cmsp}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-heart"></i> Conhece Marcelino</div>
+                    <div class="info-value" style="color: ${currentUser.marcelino === 'Sim' ? 'var(--success)' : 'var(--text-secondary)'}">
+                        ${currentUser.marcelino === 'Sim' ? '<i class="fas fa-check-circle"></i> Sim' : '<i class="fas fa-times-circle"></i> Não'}
                     </div>
                 </div>
-            `).join('');
+            `;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '--/--/----';
+            const [year, month, day] = dateString.split('-');
+            return `${day}/${month}/${year}`;
+        }
+
+        // Admin Functions
+        function renderAdmin() {
+            updateStats();
+            renderUsers();
         }
 
         function updateStats() {
             document.getElementById('totalUsers').textContent = allUsers.length;
             
             const hoje = new Date().toLocaleDateString('pt-BR');
-            document.getElementById('todayUsers').textContent = 
-                allUsers.filter(u => u.dataCadastro === hoje).length;
+            const todayCount = allUsers.filter(u => {
+                const date = new Date(u.dataCadastro).toLocaleDateString('pt-BR');
+                return date === hoje;
+            }).length;
+            document.getElementById('todayUsers').textContent = todayCount;
             
-            const know = allUsers.filter(u => u.marcelino === 'Sim').length;
+            const knowCount = allUsers.filter(u => u.marcelino === 'Sim').length;
             document.getElementById('knowMarcelino').textContent = 
-                allUsers.length ? Math.round((know / allUsers.length) * 100) + '%' : '0%';
+                allUsers.length ? Math.round((knowCount / allUsers.length) * 100) + '%' : '0%';
             
-            const plat = allUsers.filter(u => u.cmsp !== 'Nenhum').length;
+            const platCount = allUsers.filter(u => u.cmsp !== 'Nenhum').length;
             document.getElementById('usePlatform').textContent = 
-                allUsers.length ? Math.round((plat / allUsers.length) * 100) + '%' : '0%';
+                allUsers.length ? Math.round((platCount / allUsers.length) * 100) + '%' : '0%';
 
-            // Gráfico
+            // Gráfico de distribuição por ano
             const anos = {};
             allUsers.forEach(u => anos[u.ano] = (anos[u.ano] || 0) + 1);
             const total = allUsers.length;
             
-            document.getElementById('chartsContent').innerHTML = 
-                Object.entries(anos).map(([ano, count]) => `
-                    <div style="margin-bottom: 1rem;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>${ano}</span>
-                            <span style="color: var(--text-secondary);">${count} (${Math.round((count/total)*100)}%)</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${(count/total)*100}%"></div>
+            const chartsContent = document.getElementById('chartsContent');
+            chartsContent.innerHTML = Object.entries(anos).map(([ano, count]) => `
+                <div style="margin-bottom: 1.25rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span style="color: var(--text-secondary);">${ano}</span>
+                        <span style="color: var(--text-primary); font-weight: 600;">${count} (${Math.round((count/total)*100)}%)</span>
+                    </div>
+                    <div style="width: 100%; height: 6px; background: var(--surface); border-radius: 3px; overflow: hidden;">
+                        <div style="width: ${(count/total)*100}%; height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); border-radius: 3px; transition: width 0.6s ease;"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderUsers() {
+            const list = document.getElementById('usersList');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            
+            let filtered = allUsers.filter(u => u.nome.toLowerCase().includes(search));
+            
+            if (currentTab === 'today') {
+                const hoje = new Date().toLocaleDateString('pt-BR');
+                filtered = filtered.filter(u => new Date(u.dataCadastro).toLocaleDateString('pt-BR') === hoje);
+            } else if (currentTab === 'week') {
+                const weekAgo = new Date();
+                weekAgo.setDate(weekAgo.getDate() - 7);
+                filtered = filtered.filter(u => new Date(u.dataCadastro) >= weekAgo);
+            }
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Nenhum registro encontrado</h3>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = filtered.map(user => `
+                <div class="user-item" onclick="viewUser(${user.id})">
+                    <div class="user-info">
+                        <div class="user-avatar-sm">${user.nome.charAt(0).toUpperCase()}</div>
+                        <div class="user-details">
+                            <h4>${user.nome}</h4>
+                            <span>${user.ano} • ${new Date(user.dataCadastro).toLocaleDateString('pt-BR')}</span>
                         </div>
                     </div>
-                `).join('');
+                    <div class="user-actions" onclick="event.stopPropagation()">
+                        <button class="icon-btn" onclick="viewUser(${user.id})" title="Visualizar">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="icon-btn delete" onclick="deleteUser(${user.id})" title="Excluir">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function switchTab(tab, btn) {
@@ -1480,51 +1625,113 @@
         function viewUser(id) {
             const u = allUsers.find(x => x.id === id);
             if (!u) return;
-            alert(`Nome: ${u.nome}\nNascimento: ${u.nascimento}\nAno: ${u.ano}\nPlataforma: ${u.cmsp}\nConhece Marcelino: ${u.marcelino}\nData: ${new Date(u.horario).toLocaleString('pt-BR')}`);
+            
+            const info = `
+Nome: ${u.nome}
+Nascimento: ${formatDate(u.nascimento)}
+Ano: ${u.ano}
+Plataforma: ${u.cmsp}
+Conhece Marcelino: ${u.marcelino}
+Data: ${u.dataFormatada}
+ID: ${u.id}
+            `;
+            alert(info);
         }
 
         function deleteUser(id) {
-            showConfirm('Excluir este registro?', () => {
+            showConfirm('Excluir este cadastro permanentemente?', () => {
                 allUsers = allUsers.filter(u => u.id !== id);
                 saveData();
-                renderUsers();
-                updateStats();
-                showToast('Registro excluído', 'success');
+                renderAdmin();
+                showToast('Cadastro excluído', 'success');
+                
+                // Se excluiu o usuário atual, volta pro formulário
+                if (currentUser && currentUser.id === id) {
+                    currentUser = null;
+                    localStorage.removeItem(CONFIG.deviceKey);
+                    setTimeout(() => showForm(), 1000);
+                }
             });
         }
 
         function confirmReset() {
-            showConfirm('APAGAR TODOS OS DADOS?', () => {
+            showConfirm('ATENÇÃO: Isso apagará TODOS os cadastros permanentemente. Continuar?', () => {
                 allUsers = [];
                 saveData();
-                renderUsers();
-                updateStats();
-                showToast('Todos os dados apagados', 'success');
+                currentUser = null;
+                localStorage.removeItem(CONFIG.deviceKey);
+                renderAdmin();
+                showToast('Todos os dados foram apagados', 'success');
+                setTimeout(() => showForm(), 1000);
             });
         }
 
-        function exportAllData() {
-            if (!allUsers.length) return showToast('Nenhum dado', 'warning');
+        function exportCSV() {
+            if (!allUsers.length) return showToast('Nenhum dado para exportar', 'warning');
             
             const csv = [
-                ['Nome', 'Nascimento', 'Ano', 'Plataforma', 'Conhece', 'Data'].join(','),
+                ['Nome', 'Nascimento', 'Ano', 'Plataforma', 'Conhece Marcelino', 'Data Cadastro'].join(','),
                 ...allUsers.map(u => [
-                    `"${u.nome}"`, u.nascimento, u.ano, u.cmsp, u.marcelino,
-                    new Date(u.horario).toLocaleString('pt-BR')
+                    `"${u.nome}"`, u.nascimento, u.ano, u.cmsp, u.marcelino, u.dataFormatada
                 ].join(','))
             ].join('\n');
             
             const blob = new Blob(['\ufeff' + csv], {type: 'text/csv'});
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `marcelino_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `marcelino_cadastros_${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
             
-            showToast('Exportação concluída', 'success');
+            showToast('Arquivo CSV exportado', 'success');
         }
 
-        function showSyncModal() {
-            document.getElementById('syncModal').classList.add('active');
+        // Autenticação
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+
+            if (u === CONFIG.adminUser && p === CONFIG.adminPass) {
+                sessionStorage.setItem(CONFIG.sessionKey, 'active');
+                showToast('Bem-vindo, Administrador', 'success');
+                showAdmin();
+                document.getElementById('user').value = '';
+                document.getElementById('pass').value = '';
+            } else {
+                showToast('Credenciais incorretas', 'error');
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem(CONFIG.sessionKey);
+            showToast('Sessão encerrada', 'success');
+            checkExistingRegistration();
+        }
+
+        // UI Components
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                success: 'check-circle',
+                error: 'times-circle',
+                warning: 'exclamation-circle'
+            };
+            
+            toast.innerHTML = `<i class="fas fa-${icons[type]}"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        function showSuccessModal() {
+            document.getElementById('successModal').classList.add('active');
         }
 
         function showConfirm(text, onConfirm) {
@@ -1534,10 +1741,6 @@
                 onConfirm();
                 closeModalDirect();
             };
-        }
-
-        function showSuccessModal() {
-            document.getElementById('successModal').classList.add('active');
         }
 
         function closeModal(e) {
