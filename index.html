@@ -19,6 +19,7 @@
             --success: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
+            --info: #3b82f6;
             --glass: rgba(30, 41, 59, 0.8);
         }
 
@@ -99,13 +100,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .brand i {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .header-actions {
             display: flex;
             gap: 12px;
@@ -117,24 +111,29 @@
             align-items: center;
             gap: 8px;
             padding: 6px 12px;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid var(--success);
             border-radius: 20px;
             font-size: 0.85rem;
-            color: var(--success);
             font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .sync-status.syncing {
-            background: rgba(245, 158, 11, 0.2);
-            border-color: var(--warning);
-            color: var(--warning);
+        .sync-status.online {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid var(--success);
+            color: var(--success);
         }
 
         .sync-status.offline {
             background: rgba(239, 68, 68, 0.2);
-            border-color: var(--danger);
+            border: 1px solid var(--danger);
             color: var(--danger);
+        }
+
+        .sync-status.local {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid var(--info);
+            color: var(--info);
         }
 
         .btn {
@@ -156,7 +155,7 @@
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
         }
@@ -164,7 +163,6 @@
         .btn-primary:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
 
         .btn-outline {
@@ -185,6 +183,11 @@
 
         .btn-success {
             background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #d97706);
             color: white;
         }
 
@@ -254,10 +257,9 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
-            transition: color 0.3s;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 14px 16px 14px 48px;
             background: rgba(15, 23, 42, 0.6);
@@ -268,7 +270,7 @@
             transition: all 0.3s ease;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
             background: rgba(15, 23, 42, 0.8);
@@ -284,8 +286,14 @@
             border-color: var(--success);
         }
 
-        .error-message {
-            color: var(--danger);
+        textarea {
+            padding-left: 16px;
+            min-height: 120px;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .error-message, .success-message {
             font-size: 0.85rem;
             margin-top: 6px;
             display: none;
@@ -293,22 +301,9 @@
             gap: 6px;
         }
 
-        .error-message.show {
-            display: flex;
-        }
-
-        .success-message {
-            color: var(--success);
-            font-size: 0.85rem;
-            margin-top: 6px;
-            display: none;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .success-message.show {
-            display: flex;
-        }
+        .error-message { color: var(--danger); }
+        .success-message { color: var(--success); }
+        .error-message.show, .success-message.show { display: flex; }
 
         select {
             cursor: pointer;
@@ -377,7 +372,6 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            background: rgba(15, 23, 42, 0.8);
         }
 
         .stat-icon {
@@ -449,12 +443,6 @@
             transform: translateX(5px);
         }
 
-        .user-item.new-item {
-            animation: pulse 2s infinite;
-            border-color: var(--success);
-            background: rgba(16, 185, 129, 0.1);
-        }
-
         .user-info {
             display: flex;
             align-items: center;
@@ -470,7 +458,6 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1rem;
         }
 
         .user-details h4 {
@@ -537,7 +524,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 24px;
             padding: 2.5rem;
-            max-width: 500px;
+            max-width: 600px;
             width: 90%;
             text-align: center;
             transform: scale(0.9);
@@ -565,7 +552,6 @@
         .modal h3 {
             font-size: 1.75rem;
             margin-bottom: 1rem;
-            color: white;
         }
 
         .modal p {
@@ -578,6 +564,7 @@
             display: flex;
             gap: 12px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .login-container {
@@ -614,15 +601,6 @@
             gap: 1rem;
         }
 
-        .dashboard-title h2 {
-            font-size: 1.75rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .dashboard-title p {
-            color: var(--text-secondary);
-        }
-
         .search-box {
             position: relative;
             width: 300px;
@@ -630,7 +608,6 @@
 
         .search-box input {
             padding-left: 48px;
-            background: rgba(15, 23, 42, 0.6);
         }
 
         .search-box i {
@@ -645,12 +622,6 @@
             text-align: center;
             padding: 3rem;
             color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
         }
 
         .toast-container {
@@ -684,7 +655,7 @@
         .toast.success { border-left-color: var(--success); }
         .toast.error { border-left-color: var(--danger); }
         .toast.warning { border-left-color: var(--warning); }
-        .toast.info { border-left-color: var(--primary); }
+        .toast.info { border-left-color: var(--info); }
 
         .chart-container {
             background: rgba(15, 23, 42, 0.6);
@@ -718,56 +689,64 @@
             animation: fadeIn 0.5s ease-out;
         }
 
-        .live-indicator {
-            display: inline-flex;
+        .sync-code-section {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px dashed var(--info);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .sync-code-section h4 {
+            color: var(--info);
+            margin-bottom: 1rem;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            background: rgba(16, 185, 129, 0.2);
-            border-radius: 12px;
-            font-size: 0.75rem;
+            gap: 8px;
+        }
+
+        .code-display {
+            background: rgba(0,0,0,0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            word-break: break-all;
+            max-height: 150px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
             color: var(--success);
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            padding: 12px 24px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
             font-weight: 600;
         }
 
-        .live-indicator::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .duplicate-warning {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--danger);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            display: none;
-            align-items: center;
-            gap: 12px;
-            color: var(--danger);
-        }
-
-        .duplicate-warning.show {
-            display: flex;
+        .mode-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
         }
 
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             .card { padding: 1.5rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .tabs { flex-wrap: wrap; }
-            .tab { font-size: 0.85rem; padding: 10px 16px; }
             .search-box { width: 100%; }
-            .sync-status span { display: none; }
         }
     </style>
 </head>
@@ -779,23 +758,17 @@
         <div class="brand">
             <i class="fas fa-layer-group"></i>
             <span>Marcelino Forms</span>
-            <div class="live-indicator" id="liveIndicator">LIVE</div>
         </div>
         <div class="header-actions">
-            <div class="sync-status" id="syncStatus">
-                <i class="fas fa-check-circle"></i>
-                <span>Sincronizado</span>
+            <div class="sync-status local" id="syncStatus" onclick="showSyncModal()" title="Clique para sincronizar">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Modo Código</span>
             </div>
-            <button class="btn btn-outline" onclick="forceSync()" title="Sincronizar agora">
-                <i class="fas fa-sync-alt"></i>
-            </button>
             <button class="btn btn-primary" onclick="showLogin()" id="admBtn">
-                <i class="fas fa-lock"></i>
-                <span>ADM</span>
+                <i class="fas fa-lock"></i> ADM
             </button>
             <button class="btn btn-outline hidden" onclick="logout()" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Sair</span>
+                <i class="fas fa-sign-out-alt"></i> Sair
             </button>
         </div>
     </header>
@@ -804,16 +777,17 @@
         <!-- FORMULÁRIO -->
         <div id="formPage" class="card">
             <div class="card-header">
-                <h2><i class="fas fa-user-plus" style="color: var(--primary);"></i> Cadastro Global</h2>
-                <p>Sistema anti-duplicata ativo - verificação rigorosa de nomes</p>
+                <h2><i class="fas fa-user-plus" style="color: var(--primary);"></i> Cadastro</h2>
+                <p>Sistema anti-duplicata ativo - sincronização via código</p>
             </div>
 
-            <div class="duplicate-warning" id="duplicateWarning">
-                <i class="fas fa-exclamation-triangle"></i>
-                <div>
-                    <strong>Nome já cadastrado!</strong>
-                    <p style="margin: 0; font-size: 0.9rem;">Este nome já existe no sistema (verificação inteligente ativa)</p>
-                </div>
+            <div class="mode-selector">
+                <button class="mode-btn active" onclick="setMode('local')" id="btnLocal">
+                    <i class="fas fa-mobile-alt"></i> Este Dispositivo
+                </button>
+                <button class="mode-btn" onclick="setMode('sync')" id="btnSync">
+                    <i class="fas fa-globe"></i> Sincronizar
+                </button>
             </div>
 
             <form id="form">
@@ -825,11 +799,11 @@
                     </div>
                     <div class="error-message" id="nomeError">
                         <i class="fas fa-times-circle"></i>
-                        <span>Este nome já está cadastrado no sistema!</span>
+                        <span>Este nome já está cadastrado!</span>
                     </div>
                     <div class="success-message" id="nomeSuccess">
                         <i class="fas fa-check-circle"></i>
-                        <span>Nome disponível para cadastro</span>
+                        <span>Nome disponível</span>
                     </div>
                 </div>
 
@@ -846,7 +820,7 @@
                     <div class="input-wrapper">
                         <i class="fas fa-graduation-cap"></i>
                         <select id="ano" required>
-                            <option value="">Selecione o ano</option>
+                            <option value="">Selecione</option>
                             <option>6º ano</option>
                             <option>7º ano</option>
                             <option>8º ano</option>
@@ -859,11 +833,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Plataforma Utilizada</label>
+                    <label>Plataforma</label>
                     <div class="input-wrapper">
                         <i class="fas fa-laptop"></i>
                         <select id="cmsp" required>
-                            <option value="">Selecione a plataforma</option>
+                            <option value="">Selecione</option>
                             <option>Sala do Futuro</option>
                             <option>CMSP</option>
                             <option>Nenhum</option>
@@ -876,16 +850,15 @@
                     <div class="input-wrapper">
                         <i class="fas fa-question-circle"></i>
                         <select id="marcelino" required>
-                            <option value="">Selecione uma opção</option>
+                            <option value="">Selecione</option>
                             <option>Sim</option>
                             <option>Não</option>
                         </select>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.1rem; margin-top: 1rem;" id="submitBtn">
-                    <i class="fas fa-paper-plane"></i>
-                    Enviar para Nuvem
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.1rem;" id="submitBtn">
+                    <i class="fas fa-save"></i> Salvar Cadastro
                 </button>
             </form>
         </div>
@@ -898,34 +871,25 @@
                 </div>
                 <div class="card-header">
                     <h2>Acesso Restrito</h2>
-                    <p>Painel administrativo global</p>
                 </div>
-
                 <form onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label>Usuário</label>
                         <div class="input-wrapper">
                             <i class="fas fa-user-shield"></i>
-                            <input type="text" id="user" required placeholder="Digite o usuário">
+                            <input type="text" id="user" required placeholder="Usuário">
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label>Senha</label>
                         <div class="input-wrapper">
                             <i class="fas fa-lock"></i>
-                            <input type="password" id="pass" required placeholder="Digite a senha">
+                            <input type="password" id="pass" required placeholder="Senha">
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Entrar no Sistema
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
                     </button>
-                    
                     <button type="button" class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;" onclick="showForm()">
-                        <i class="fas fa-arrow-left"></i>
-                        Voltar
+                        <i class="fas fa-arrow-left"></i> Voltar
                     </button>
                 </form>
             </div>
@@ -937,17 +901,17 @@
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-users"></i></div>
                     <div class="stat-value" id="totalUsers">0</div>
-                    <div class="stat-label">Total Global</div>
+                    <div class="stat-label">Total</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
                     <div class="stat-value" id="todayUsers">0</div>
-                    <div class="stat-label">Cadastros Hoje</div>
+                    <div class="stat-label">Hoje</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-eye"></i></div>
                     <div class="stat-value" id="knowMarcelino">0%</div>
-                    <div class="stat-label">Conhecem Marcelino</div>
+                    <div class="stat-label">Conhecem</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-laptop-code"></i></div>
@@ -956,19 +920,36 @@
                 </div>
             </div>
 
-            <div class="chart-container">
-                <h3 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-chart-pie" style="color: var(--primary);"></i>
-                    Distribuição por Ano Escolar
-                </h3>
-                <div id="chartsContent"></div>
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem;"><i class="fas fa-sync" style="color: var(--info);"></i> Sincronização entre Dispositivos</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                    Como não temos servidor próprio, use este sistema de código para transferir dados entre dispositivos.
+                </p>
+                
+                <div class="sync-code-section">
+                    <h4><i class="fas fa-download"></i> Exportar Dados (Gerar Código)</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Copie este código e cole em outro dispositivo:</p>
+                    <div class="code-display" id="exportCode">Nenhum dado para exportar</div>
+                    <button class="btn btn-success" onclick="generateExportCode()">
+                        <i class="fas fa-code"></i> Gerar Código de Exportação
+                    </button>
+                </div>
+
+                <div class="sync-code-section">
+                    <h4><i class="fas fa-upload"></i> Importar Dados (Colar Código)</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Cole o código de outro dispositivo aqui:</p>
+                    <textarea id="importCode" placeholder="Cole aqui o código recebido..."></textarea>
+                    <button class="btn btn-warning" onclick="importFromCode()" style="margin-top: 0.5rem;">
+                        <i class="fas fa-file-import"></i> Importar Código
+                    </button>
+                </div>
             </div>
 
             <div class="card">
                 <div class="dashboard-header">
-                    <div class="dashboard-title">
-                        <h2>Registros Globais</h2>
-                        <p>Sincronizados em tempo real entre todos os dispositivos</p>
+                    <div>
+                        <h2>Registros</h2>
+                        <p style="color: var(--text-secondary);">Gerencie todos os cadastros</p>
                     </div>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                         <div class="search-box">
@@ -976,29 +957,18 @@
                             <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="filterUsers()">
                         </div>
                         <button class="btn btn-success" onclick="exportAllData()">
-                            <i class="fas fa-download"></i>
-                            Exportar CSV
+                            <i class="fas fa-download"></i> CSV
                         </button>
                         <button class="btn btn-danger" onclick="confirmReset()">
-                            <i class="fas fa-trash-alt"></i>
-                            Limpar Tudo
+                            <i class="fas fa-trash-alt"></i> Limpar
                         </button>
                     </div>
                 </div>
 
                 <div class="tabs">
-                    <button class="tab active" onclick="switchTab('all', this)">
-                        <i class="fas fa-list"></i> Todos
-                    </button>
-                    <button class="tab" onclick="switchTab('today', this)">
-                        <i class="fas fa-calendar-day"></i> Hoje
-                    </button>
-                    <button class="tab" onclick="switchTab('week', this)">
-                        <i class="fas fa-calendar-week"></i> Semana
-                    </button>
-                    <button class="tab" onclick="switchTab('new', this)">
-                        <i class="fas fa-bell"></i> Novos
-                    </button>
+                    <button class="tab active" onclick="switchTab('all', this)">Todos</button>
+                    <button class="tab" onclick="switchTab('today', this)">Hoje</button>
+                    <button class="tab" onclick="switchTab('week', this)">Semana</button>
                 </div>
 
                 <div id="usersList" class="users-list"></div>
@@ -1006,17 +976,49 @@
         </div>
     </div>
 
-    <!-- MODAIS -->
+    <!-- MODAL DE SINCRONIZAÇÃO -->
+    <div id="syncModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal">
+            <div class="modal-icon" style="background: linear-gradient(135deg, var(--info), #2563eb);">
+                <i class="fas fa-sync"></i>
+            </div>
+            <h3>Sincronizar Dispositivos</h3>
+            <p>Escolha como deseja sincronizar seus dados:</p>
+            
+            <div style="text-align: left; margin: 1.5rem 0;">
+                <div class="sync-code-section">
+                    <h4><i class="fas fa-share-alt"></i> Modo 1: Código de Transferência</h4>
+                    <p style="font-size: 0.85rem;">Gere um código neste dispositivo e importe em outro.</p>
+                    <button class="btn btn-primary" onclick="showAdmin(); closeModalDirect();" style="width: 100%;">
+                        Ir para Painel de Sincronização
+                    </button>
+                </div>
+                
+                <div class="sync-code-section" style="margin-top: 1rem;">
+                    <h4><i class="fas fa-info-circle"></i> Status Atual</h4>
+                    <p id="syncStatusText" style="font-size: 0.85rem; color: var(--text-secondary);">
+                        Modo Local Ativo<br>
+                        Dados salvos apenas neste dispositivo.<br>
+                        Use o código acima para transferir.
+                    </p>
+                </div>
+            </div>
+            
+            <button class="btn btn-outline" onclick="closeModalDirect()">Fechar</button>
+        </div>
+    </div>
+
+    <!-- MODAIS DE SUCESSO/ERRO -->
     <div id="successModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal">
             <div class="modal-icon">
                 <i class="fas fa-check"></i>
             </div>
-            <h3>Enviado Globalmente!</h3>
-            <p>Seu cadastro foi sincronizado em todos os dispositivos em tempo real.</p>
+            <h3>Cadastro Salvo!</h3>
+            <p>Os dados foram salvos localmente.</p>
             <div class="modal-actions">
                 <a href="https://leozinho.erbystore.com/" target="_blank" class="btn btn-success" style="text-decoration: none;">
-                    <i class="fas fa-store"></i> Acessar Loja
+                    <i class="fas fa-store"></i> Loja
                 </a>
                 <button class="btn btn-outline" onclick="closeModalDirect()">Fechar</button>
             </div>
@@ -1028,7 +1030,7 @@
             <div class="modal-icon" style="background: linear-gradient(135deg, var(--danger), #dc2626);">
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
-            <h3>Confirmar Ação</h3>
+            <h3>Confirmar</h3>
             <p id="confirmText">Tem certeza?</p>
             <div class="modal-actions">
                 <button class="btn btn-danger" id="confirmBtn">Confirmar</button>
@@ -1038,50 +1040,37 @@
     </div>
 
     <script>
-        // CONFIGURAÇÃO COM SUAS CREDENCIAIS JSONBIN
+        // CONFIGURAÇÃO
         const CONFIG = {
-            // Suas credenciais do JSONBin.io
-            apiUrl: 'https://api.jsonbin.io/v3/b/67cf8e7b8561e97a50f9e3f1', // Substitua pelo seu Bin ID real
-            apiKey: '$2a$10$8FqTm3aZyGQIt5Xh1A9tk.O3l3J8O4spOggPGUHvcz6U/B1l5EwuS', // Sua X-Master-Key
-            
             adminUser: 'Marcelino',
             adminPass: 'Leonardo@24.',
-            syncInterval: 5000,
+            storageKey: 'marcelino_forms_data',
             sessionKey: 'marcelino_session',
-            localBackupKey: 'marcelino_backup'
+            syncMode: 'local' // 'local' ou 'sync'
         };
 
         let allUsers = [];
         let currentTab = 'all';
-        let syncInterval;
-        let isSyncing = false;
         let nomeValido = false;
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
-            initSystem();
+            loadData();
             setupNomeValidation();
+            checkSession();
+            updateSyncStatus();
         });
 
-        async function initSystem() {
-            loadLocalBackup();
-            await syncFromCloud();
-            startAutoSync();
-            checkSession();
-            showToast('Sistema inicializado. Anti-duplicata ativo.', 'success');
-        }
-
-        // SISTEMA ANTI-DUPLICATA RIGOROSO
+        // SISTEMA ANTI-DUPLICATA
         function normalizeNome(nome) {
             if (!nome) return '';
-            
             return nome
-                .toLowerCase()                                    // Minúsculas
-                .normalize('NFD')                                 // Remove acentos
-                .replace(/[\u0300-\u036f]/g, '')                  // Remove diacríticos
-                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')      // Remove pontuação
-                .replace(/\s+/g, '')                              // Remove todos os espaços
-                .replace(/[^\w]/g, '');                           // Remove caracteres especiais restantes
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+                .replace(/\s+/g, '')
+                .replace(/[^\w]/g, '');
         }
 
         function checkDuplicate(nomeInput) {
@@ -1092,37 +1081,27 @@
             }
 
             const normalizedInput = normalizeNome(nomeDigitado);
-            
-            // Verificar contra todos os usuários cadastrados
-            const duplicate = allUsers.find(user => {
-                const normalizedExisting = normalizeNome(user.nome);
-                return normalizedExisting === normalizedInput;
-            });
+            const duplicate = allUsers.find(user => 
+                normalizeNome(user.nome) === normalizedInput
+            );
 
             const inputEl = document.getElementById('nome');
             const errorEl = document.getElementById('nomeError');
             const successEl = document.getElementById('nomeSuccess');
-            const warningEl = document.getElementById('duplicateWarning');
             const submitBtn = document.getElementById('submitBtn');
 
             if (duplicate) {
-                // Nome duplicado encontrado
                 inputEl.classList.add('error');
                 inputEl.classList.remove('success');
                 errorEl.classList.add('show');
                 successEl.classList.remove('show');
-                warningEl.classList.add('show');
                 submitBtn.disabled = true;
                 nomeValido = false;
-                
-                showToast(`Nome já cadastrado: "${duplicate.nome}"`, 'error');
             } else {
-                // Nome disponível
                 inputEl.classList.remove('error');
                 inputEl.classList.add('success');
                 errorEl.classList.remove('show');
                 successEl.classList.add('show');
-                warningEl.classList.remove('show');
                 submitBtn.disabled = false;
                 nomeValido = true;
             }
@@ -1133,205 +1112,62 @@
             inputEl.classList.remove('error', 'success');
             document.getElementById('nomeError').classList.remove('show');
             document.getElementById('nomeSuccess').classList.remove('show');
-            document.getElementById('duplicateWarning').classList.remove('show');
             document.getElementById('submitBtn').disabled = false;
             nomeValido = false;
         }
 
         function setupNomeValidation() {
             const nomeInput = document.getElementById('nome');
-            
-            // Validar em tempo real enquanto digita
             nomeInput.addEventListener('input', (e) => {
-                // Debounce para não verificar a cada tecla
                 clearTimeout(window.validateTimeout);
                 window.validateTimeout = setTimeout(() => {
                     checkDuplicate(e.target);
                 }, 500);
             });
-
-            // Validar quando sair do campo
             nomeInput.addEventListener('blur', (e) => {
                 checkDuplicate(e.target);
             });
         }
 
-        // SINCRONIZAÇÃO COM JSONBIN
-        async function syncFromCloud() {
-            if (isSyncing) return;
-            isSyncing = true;
-            updateSyncStatus('syncing');
-
-            try {
-                const response = await fetch(CONFIG.apiUrl + '/latest', {
-                    method: 'GET',
-                    headers: {
-                        'X-Master-Key': CONFIG.apiKey,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                const cloudData = data.record;
-
-                if (cloudData && cloudData.users) {
-                    // Detectar novos itens
-                    const newItems = detectNewItems(allUsers, cloudData.users);
-                    
-                    allUsers = cloudData.users;
-                    saveLocalBackup();
-
-                    if (!document.getElementById('adminPage').classList.contains('hidden')) {
-                        renderUsers();
-                        updateStats();
-                    }
-
-                    if (newItems.length > 0) {
-                        showToast(`${newItems.length} novo(s) cadastro(s) detectado(s)!`, 'info');
-                        highlightNewItems(newItems);
-                    }
-
-                    updateSyncStatus('online');
-                }
-            } catch (error) {
-                console.error('Erro sync:', error);
-                updateSyncStatus('offline');
-                showToast('Modo offline - usando cache local', 'warning');
-            } finally {
-                isSyncing = false;
+        // GERENCIAMENTO DE DADOS
+        function loadData() {
+            const data = localStorage.getItem(CONFIG.storageKey);
+            if (data) {
+                allUsers = JSON.parse(data);
             }
         }
 
-        async function syncToCloud() {
-            if (isSyncing) return false;
-            isSyncing = true;
-            updateSyncStatus('syncing');
-
-            try {
-                const payload = {
-                    users: allUsers,
-                    lastUpdate: new Date().toISOString(),
-                    device: navigator.userAgent,
-                    version: '1.0'
-                };
-
-                const response = await fetch(CONFIG.apiUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'X-Master-Key': CONFIG.apiKey,
-                        'Content-Type': 'application/json',
-                        'X-Bin-Private': 'false'
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-
-                saveLocalBackup();
-                updateSyncStatus('online');
-                return true;
-            } catch (error) {
-                console.error('Erro ao salvar:', error);
-                updateSyncStatus('offline');
-                showToast('Erro ao sincronizar - salvo localmente', 'error');
-                return false;
-            } finally {
-                isSyncing = false;
-            }
+        function saveData() {
+            localStorage.setItem(CONFIG.storageKey, JSON.stringify(allUsers));
+            updateSyncStatus();
         }
 
-        function startAutoSync() {
-            syncFromCloud();
-            syncInterval = setInterval(async () => {
-                await syncFromCloud();
-            }, CONFIG.syncInterval);
-        }
-
-        function forceSync() {
-            syncFromCloud();
-            showToast('Sincronização forçada', 'info');
-        }
-
-        function updateSyncStatus(status) {
-            const el = document.getElementById('syncStatus');
-            const icons = {
-                online: 'fa-check-circle',
-                syncing: 'fa-sync fa-spin',
-                offline: 'fa-exclamation-circle'
-            };
-            const texts = {
-                online: 'Sincronizado',
-                syncing: 'Sincronizando...',
-                offline: 'Offline'
-            };
-            
-            el.className = `sync-status ${status}`;
-            el.innerHTML = `<i class="fas ${icons[status]}"></i><span>${texts[status]}</span>`;
-        }
-
-        function saveLocalBackup() {
-            localStorage.setItem(CONFIG.localBackupKey, JSON.stringify({
-                users: allUsers,
-                timestamp: new Date().toISOString()
-            }));
-        }
-
-        function loadLocalBackup() {
-            const backup = localStorage.getItem(CONFIG.localBackupKey);
-            if (backup) {
-                const data = JSON.parse(backup);
-                allUsers = data.users || [];
-            }
-        }
-
-        function detectNewItems(oldArray, newArray) {
-            if (!oldArray || oldArray.length === 0) return [];
-            const oldIds = new Set(oldArray.map(u => u.id));
-            return newArray.filter(u => !oldIds.has(u.id));
-        }
-
-        function highlightNewItems(items) {
-            setTimeout(() => {
-                items.forEach(item => {
-                    const el = document.querySelector(`[data-id="${item.id}"]`);
-                    if (el) el.classList.add('new-item');
-                });
-            }, 100);
-        }
-
-        // FORMULÁRIO COM VALIDAÇÃO ANTI-DUPLICATA
+        // FORMULÁRIO
         async function getIP() {
             try {
                 const res = await fetch('https://api.ipify.org?format=json');
                 const data = await res.json();
                 return data.ip;
             } catch (e) {
-                return 'Não detectado';
+                return 'local';
             }
         }
 
         document.getElementById('form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Verificação final de duplicata
             const nomeInput = document.getElementById('nome');
             checkDuplicate(nomeInput);
             
             if (!nomeValido) {
-                showToast('Não é possível enviar: nome já cadastrado!', 'error');
+                showToast('Nome já cadastrado!', 'error');
                 nomeInput.focus();
                 return;
             }
 
             const btn = this.querySelector('button[type="submit"]');
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sincronizando...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
             btn.disabled = true;
 
             try {
@@ -1344,52 +1180,118 @@
                     cmsp: document.getElementById('cmsp').value,
                     marcelino: document.getElementById('marcelino').value,
                     ip: ip,
-                    navegador: navigator.userAgent,
-                    plataforma: navigator.platform,
                     horario: new Date().toISOString(),
-                    dataCadastro: new Date().toLocaleDateString('pt-BR'),
-                    deviceId: generateDeviceId()
+                    dataCadastro: new Date().toLocaleDateString('pt-BR')
                 };
 
-                // Verificação dupla antes de adicionar
+                // Verificação dupla
                 const normalizedNew = normalizeNome(newUser.nome);
                 const exists = allUsers.some(u => normalizeNome(u.nome) === normalizedNew);
                 
                 if (exists) {
-                    showToast('Erro: Nome foi cadastrado por outro usuário enquanto você digitava!', 'error');
+                    showToast('Nome duplicado detectado!', 'error');
                     checkDuplicate(nomeInput);
                     return;
                 }
 
                 allUsers.unshift(newUser);
-                const synced = await syncToCloud();
+                saveData();
                 
-                if (synced) {
-                    showSuccessModal();
-                    this.reset();
-                    resetValidation();
-                    showToast('Cadastro sincronizado globalmente!', 'success');
-                } else {
-                    queueFailedSync(newUser);
-                    showToast('Salvo localmente. Sincronizaremos quando possível.', 'warning');
-                }
+                showSuccessModal();
+                this.reset();
+                resetValidation();
+                showToast('Cadastro salvo com sucesso!', 'success');
                 
             } catch (error) {
-                showToast('Erro ao processar cadastro', 'error');
+                showToast('Erro ao salvar', 'error');
             } finally {
                 btn.innerHTML = originalHTML;
                 btn.disabled = false;
             }
         });
 
-        function generateDeviceId() {
-            return 'device_' + Math.random().toString(36).substr(2, 9);
+        // SINCRONIZAÇÃO VIA CÓDIGO
+        function generateExportCode() {
+            if (allUsers.length === 0) {
+                showToast('Nenhum dado para exportar', 'warning');
+                return;
+            }
+
+            const data = {
+                users: allUsers,
+                exportedAt: new Date().toISOString(),
+                version: '1.0'
+            };
+
+            // Compactar dados
+            const jsonString = JSON.stringify(data);
+            const encoded = btoa(unescape(encodeURIComponent(jsonString)));
+            
+            document.getElementById('exportCode').textContent = encoded;
+            showToast('Código gerado! Copie e envie para outro dispositivo.', 'success');
+            
+            // Auto-selecionar para fácil cópia
+            const range = document.createRange();
+            range.selectNode(document.getElementById('exportCode'));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
         }
 
-        function queueFailedSync(user) {
-            setTimeout(async () => {
-                await syncToCloud();
-            }, 10000);
+        function importFromCode() {
+            const code = document.getElementById('importCode').value.trim();
+            
+            if (!code) {
+                showToast('Cole um código válido', 'error');
+                return;
+            }
+
+            try {
+                // Decodificar
+                const jsonString = decodeURIComponent(escape(atob(code)));
+                const data = JSON.parse(jsonString);
+
+                if (!data.users || !Array.isArray(data.users)) {
+                    throw new Error('Formato inválido');
+                }
+
+                // Mesclar dados (evitar duplicatas)
+                let importedCount = 0;
+                let duplicateCount = 0;
+
+                data.users.forEach(importedUser => {
+                    const normalizedImported = normalizeNome(importedUser.nome);
+                    const exists = allUsers.some(existing => 
+                        normalizeNome(existing.nome) === normalizedImported
+                    );
+
+                    if (!exists) {
+                        allUsers.push(importedUser);
+                        importedCount++;
+                    } else {
+                        duplicateCount++;
+                    }
+                });
+
+                saveData();
+                
+                if (importedCount > 0) {
+                    showToast(`${importedCount} cadastro(s) importado(s)!`, 'success');
+                    if (!document.getElementById('adminPage').classList.contains('hidden')) {
+                        renderUsers();
+                        updateStats();
+                    }
+                }
+                
+                if (duplicateCount > 0) {
+                    showToast(`${duplicateCount} já existiam e foram ignorados.`, 'warning');
+                }
+
+                document.getElementById('importCode').value = '';
+                
+            } catch (error) {
+                console.error(error);
+                showToast('Código inválido ou corrompido!', 'error');
+            }
         }
 
         // UI FUNCTIONS
@@ -1409,9 +1311,18 @@
             
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100%)';
                 setTimeout(() => toast.remove(), 300);
             }, 4000);
+        }
+
+        function setMode(mode) {
+            CONFIG.syncMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(mode === 'local' ? 'btnLocal' : 'btnSync').classList.add('active');
+            
+            if (mode === 'sync') {
+                showAdmin();
+            }
         }
 
         function showForm() {
@@ -1451,7 +1362,7 @@
 
             if (u === CONFIG.adminUser && p === CONFIG.adminPass) {
                 sessionStorage.setItem(CONFIG.sessionKey, 'active');
-                showToast('Bem-vindo ao painel global!', 'success');
+                showToast('Bem-vindo!', 'success');
                 showAdmin();
                 document.getElementById('user').value = '';
                 document.getElementById('pass').value = '';
@@ -1472,7 +1383,13 @@
             }
         }
 
-        // ADMIN PANEL
+        function updateSyncStatus() {
+            const el = document.getElementById('syncStatus');
+            const count = allUsers.length;
+            el.innerHTML = `<i class="fas fa-database"></i><span>${count} regs</span>`;
+        }
+
+        // ADMIN
         function renderUsers() {
             const list = document.getElementById('usersList');
             const search = document.getElementById('searchInput').value.toLowerCase();
@@ -1486,9 +1403,6 @@
                 const weekAgo = new Date();
                 weekAgo.setDate(weekAgo.getDate() - 7);
                 filtered = filtered.filter(u => new Date(u.horario) >= weekAgo);
-            } else if (currentTab === 'new') {
-                const fiveMinAgo = new Date(Date.now() - 5 * 60000);
-                filtered = filtered.filter(u => new Date(u.horario) >= fiveMinAgo);
             }
 
             if (filtered.length === 0) {
@@ -1496,7 +1410,6 @@
                     <div class="empty-state">
                         <i class="fas fa-inbox"></i>
                         <h3>Nenhum registro</h3>
-                        <p>Os dados aparecerão aqui quando houver cadastros</p>
                     </div>
                 `;
                 return;
@@ -1508,15 +1421,11 @@
                         <div class="user-avatar">${user.nome.charAt(0).toUpperCase()}</div>
                         <div class="user-details">
                             <h4>${user.nome}</h4>
-                            <span>
-                                <i class="fas fa-graduation-cap"></i> ${user.ano} | 
-                                <i class="fas fa-clock"></i> ${new Date(user.horario).toLocaleString('pt-BR')}
-                            </span>
+                            <span>${user.ano} | ${new Date(user.horario).toLocaleString('pt-BR')}</span>
                         </div>
                     </div>
                     <div class="user-actions">
                         <button class="icon-btn" onclick="viewUser(${user.id})" title="Ver"><i class="fas fa-eye"></i></button>
-                        <button class="icon-btn" onclick="downloadUser(${user.id})" title="Download"><i class="fas fa-download"></i></button>
                         <button class="icon-btn delete" onclick="deleteUser(${user.id})" title="Excluir"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>
@@ -1538,6 +1447,7 @@
             document.getElementById('usePlatform').textContent = 
                 allUsers.length ? Math.round((plat / allUsers.length) * 100) + '%' : '0%';
 
+            // Gráfico
             const anos = {};
             allUsers.forEach(u => anos[u.ano] = (anos[u.ano] || 0) + 1);
             const total = allUsers.length;
@@ -1545,7 +1455,7 @@
             document.getElementById('chartsContent').innerHTML = 
                 Object.entries(anos).map(([ano, count]) => `
                     <div style="margin-bottom: 1rem;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                        <div style="display: flex; justify-content: space-between;">
                             <span>${ano}</span>
                             <span style="color: var(--text-secondary);">${count} (${Math.round((count/total)*100)}%)</span>
                         </div>
@@ -1567,76 +1477,39 @@
             renderUsers();
         }
 
-        async function deleteUser(id) {
-            showConfirm('Excluir este registro permanentemente?', async () => {
+        function viewUser(id) {
+            const u = allUsers.find(x => x.id === id);
+            if (!u) return;
+            alert(`Nome: ${u.nome}\nNascimento: ${u.nascimento}\nAno: ${u.ano}\nPlataforma: ${u.cmsp}\nConhece Marcelino: ${u.marcelino}\nData: ${new Date(u.horario).toLocaleString('pt-BR')}`);
+        }
+
+        function deleteUser(id) {
+            showConfirm('Excluir este registro?', () => {
                 allUsers = allUsers.filter(u => u.id !== id);
-                await syncToCloud();
+                saveData();
                 renderUsers();
                 updateStats();
-                showToast('Registro excluído globalmente', 'success');
+                showToast('Registro excluído', 'success');
             });
         }
 
-        async function confirmReset() {
-            showConfirm('APAGAR TODOS OS DADOS GLOBAIS?', async () => {
+        function confirmReset() {
+            showConfirm('APAGAR TODOS OS DADOS?', () => {
                 allUsers = [];
-                await syncToCloud();
+                saveData();
                 renderUsers();
                 updateStats();
                 showToast('Todos os dados apagados', 'success');
             });
         }
 
-        function viewUser(id) {
-            const u = allUsers.find(x => x.id === id);
-            if (!u) return;
-            
-            alert(`
-Nome: ${u.nome}
-Nascimento: ${u.nascimento}
-Ano: ${u.ano}
-Plataforma: ${u.cmsp}
-Conhece Marcelino: ${u.marcelino}
-IP: ${u.ip}
-Dispositivo: ${u.plataforma}
-Data: ${new Date(u.horario).toLocaleString('pt-BR')}
-            `);
-        }
-
-        function downloadUser(id) {
-            const u = allUsers.find(x => x.id === id);
-            if (!u) return;
-            
-            const content = `=== CADASTRO MARCELINO ===
-Nome: ${u.nome}
-Data Nasc.: ${u.nascimento}
-Ano: ${u.ano}
-Plataforma: ${u.cmsp}
-Conhece Marcelino: ${u.marcelino}
-
-IP: ${u.ip}
-Navegador: ${u.navegador}
-SO: ${u.plataforma}
-Data: ${new Date(u.horario).toLocaleString('pt-BR')}
-ID: ${u.id}
-            `;
-            
-            const blob = new Blob([content], {type: 'text/plain'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `cadastro_${u.nome.replace(/\s+/g, '_')}.txt`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
         function exportAllData() {
             if (!allUsers.length) return showToast('Nenhum dado', 'warning');
             
             const csv = [
-                ['Nome', 'Nascimento', 'Ano', 'Plataforma', 'Conhece', 'IP', 'Data'].join(','),
+                ['Nome', 'Nascimento', 'Ano', 'Plataforma', 'Conhece', 'Data'].join(','),
                 ...allUsers.map(u => [
-                    `"${u.nome}"`, u.nascimento, u.ano, u.cmsp, u.marcelino, u.ip,
+                    `"${u.nome}"`, u.nascimento, u.ano, u.cmsp, u.marcelino,
                     new Date(u.horario).toLocaleString('pt-BR')
                 ].join(','))
             ].join('\n');
@@ -1644,10 +1517,14 @@ ID: ${u.id}
             const blob = new Blob(['\ufeff' + csv], {type: 'text/csv'});
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `marcelino_global_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `marcelino_${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
             
             showToast('Exportação concluída', 'success');
+        }
+
+        function showSyncModal() {
+            document.getElementById('syncModal').classList.add('active');
         }
 
         function showConfirm(text, onConfirm) {
@@ -1672,10 +1549,6 @@ ID: ${u.id}
         function closeModalDirect() {
             document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
         }
-
-        window.addEventListener('beforeunload', () => {
-            if (syncInterval) clearInterval(syncInterval);
-        });
     </script>
 </body>
 </html>
