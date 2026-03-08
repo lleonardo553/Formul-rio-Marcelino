@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcelino Forms | Sistema Profissional</title>
+    <title>Marcelino Forms | Sistema Global</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -36,7 +36,6 @@
             overflow-x: hidden;
         }
 
-        /* Animações */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -52,9 +51,10 @@
             50% { transform: scale(1.05); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
         @keyframes gradient {
@@ -75,7 +75,6 @@
             animation: gradient 15s ease infinite;
         }
 
-        /* Header Profissional */
         header {
             background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(20px);
@@ -98,7 +97,6 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .brand i {
@@ -112,6 +110,31 @@
             display: flex;
             gap: 12px;
             align-items: center;
+        }
+
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid var(--success);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .sync-status.syncing {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .sync-status.offline {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--danger);
+            color: var(--danger);
         }
 
         .btn {
@@ -138,6 +161,12 @@
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
         }
 
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .btn-outline {
             background: transparent;
             border: 2px solid rgba(255,255,255,0.2);
@@ -159,14 +188,12 @@
             color: white;
         }
 
-        /* Container Principal */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
 
-        /* Cards Modernos */
         .card {
             background: var(--glass);
             backdrop-filter: blur(20px);
@@ -202,7 +229,6 @@
             font-size: 1.1rem;
         }
 
-        /* Formulários */
         .form-group {
             margin-bottom: 1.5rem;
             position: relative;
@@ -249,8 +275,39 @@
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
 
-        input:focus + i, .input-wrapper:focus-within i {
-            color: var(--primary);
+        input.error {
+            border-color: var(--danger);
+            animation: shake 0.5s;
+        }
+
+        input.success {
+            border-color: var(--success);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        .success-message {
+            color: var(--success);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .success-message.show {
+            display: flex;
         }
 
         select {
@@ -270,7 +327,6 @@
             pointer-events: none;
         }
 
-        /* Sistema de Abas */
         .tabs {
             display: flex;
             gap: 8px;
@@ -303,12 +359,6 @@
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
-        .tab:hover:not(.active) {
-            background: rgba(255,255,255,0.05);
-            color: white;
-        }
-
-        /* Grid de Estatísticas */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -357,7 +407,6 @@
             font-size: 0.9rem;
         }
 
-        /* Lista de Usuários */
         .users-list {
             display: flex;
             flex-direction: column;
@@ -398,6 +447,12 @@
             background: rgba(99, 102, 241, 0.1);
             border-color: var(--primary);
             transform: translateX(5px);
+        }
+
+        .user-item.new-item {
+            animation: pulse 2s infinite;
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
         }
 
         .user-info {
@@ -456,7 +511,6 @@
             background: var(--danger);
         }
 
-        /* Modal/Popup Profissional */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -526,7 +580,6 @@
             justify-content: center;
         }
 
-        /* Login Screen */
         .login-container {
             min-height: calc(100vh - 80px);
             display: flex;
@@ -552,7 +605,6 @@
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
         }
 
-        /* Dashboard Layout */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -589,7 +641,6 @@
             color: var(--text-secondary);
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -602,50 +653,6 @@
             opacity: 0.5;
         }
 
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .card {
-                padding: 1.5rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .tabs {
-                flex-wrap: wrap;
-            }
-            
-            .tab {
-                font-size: 0.85rem;
-                padding: 10px 16px;
-            }
-            
-            .search-box {
-                width: 100%;
-            }
-        }
-
-        /* Loading Spinner */
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Toast Notifications */
         .toast-container {
             position: fixed;
             top: 100px;
@@ -677,39 +684,8 @@
         .toast.success { border-left-color: var(--success); }
         .toast.error { border-left-color: var(--danger); }
         .toast.warning { border-left-color: var(--warning); }
+        .toast.info { border-left-color: var(--primary); }
 
-        /* Toggle Switch */
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 26px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 13px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .toggle-switch.active {
-            background: var(--success);
-        }
-
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            background: white;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.3s;
-        }
-
-        .toggle-switch.active::after {
-            transform: translateX(24px);
-        }
-
-        /* Gráfico simples */
         .chart-container {
             background: rgba(15, 23, 42, 0.6);
             border-radius: 16px;
@@ -741,27 +717,81 @@
         .fade-in {
             animation: fadeIn 0.5s ease-out;
         }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .live-indicator::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .duplicate-warning {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            color: var(--danger);
+        }
+
+        .duplicate-warning.show {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .card { padding: 1.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .tabs { flex-wrap: wrap; }
+            .tab { font-size: 0.85rem; padding: 10px 16px; }
+            .search-box { width: 100%; }
+            .sync-status span { display: none; }
+        }
     </style>
 </head>
 <body>
     <div class="animated-bg"></div>
-    
-    <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Header -->
     <header>
         <div class="brand">
             <i class="fas fa-layer-group"></i>
             <span>Marcelino Forms</span>
+            <div class="live-indicator" id="liveIndicator">LIVE</div>
         </div>
         <div class="header-actions">
-            <button class="btn btn-outline" onclick="toggleTheme()">
-                <i class="fas fa-moon"></i>
+            <div class="sync-status" id="syncStatus">
+                <i class="fas fa-check-circle"></i>
+                <span>Sincronizado</span>
+            </div>
+            <button class="btn btn-outline" onclick="forceSync()" title="Sincronizar agora">
+                <i class="fas fa-sync-alt"></i>
             </button>
             <button class="btn btn-primary" onclick="showLogin()" id="admBtn">
                 <i class="fas fa-lock"></i>
-                <span>Área Administrativa</span>
+                <span>ADM</span>
             </button>
             <button class="btn btn-outline hidden" onclick="logout()" id="logoutBtn">
                 <i class="fas fa-sign-out-alt"></i>
@@ -771,19 +801,35 @@
     </header>
 
     <div class="container">
-        <!-- PÁGINA DO FORMULÁRIO -->
+        <!-- FORMULÁRIO -->
         <div id="formPage" class="card">
             <div class="card-header">
-                <h2><i class="fas fa-user-plus" style="color: var(--primary);"></i> Cadastro de Participante</h2>
-                <p>Preencha suas informações para acessar materiais exclusivos</p>
+                <h2><i class="fas fa-user-plus" style="color: var(--primary);"></i> Cadastro Global</h2>
+                <p>Sistema anti-duplicata ativo - verificação rigorosa de nomes</p>
+            </div>
+
+            <div class="duplicate-warning" id="duplicateWarning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <strong>Nome já cadastrado!</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">Este nome já existe no sistema (verificação inteligente ativa)</p>
+                </div>
             </div>
 
             <form id="form">
                 <div class="form-group">
-                    <label>Nome Completo</label>
+                    <label>Nome Completo <span style="color: var(--danger);">*</span></label>
                     <div class="input-wrapper">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="nome" required placeholder="Digite seu nome completo">
+                        <input type="text" id="nome" required placeholder="Digite seu nome completo" autocomplete="off">
+                    </div>
+                    <div class="error-message" id="nomeError">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Este nome já está cadastrado no sistema!</span>
+                    </div>
+                    <div class="success-message" id="nomeSuccess">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Nome disponível para cadastro</span>
                     </div>
                 </div>
 
@@ -837,14 +883,14 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.1rem; margin-top: 1rem;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.1rem; margin-top: 1rem;" id="submitBtn">
                     <i class="fas fa-paper-plane"></i>
-                    Enviar Cadastro
+                    Enviar para Nuvem
                 </button>
             </form>
         </div>
 
-        <!-- PÁGINA DE LOGIN -->
+        <!-- LOGIN -->
         <div id="loginPage" class="login-container hidden">
             <div class="card login-card">
                 <div class="login-icon">
@@ -852,7 +898,7 @@
                 </div>
                 <div class="card-header">
                     <h2>Acesso Restrito</h2>
-                    <p>Entre com suas credenciais administrativas</p>
+                    <p>Painel administrativo global</p>
                 </div>
 
                 <form onsubmit="handleLogin(event)">
@@ -879,72 +925,59 @@
                     
                     <button type="button" class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;" onclick="showForm()">
                         <i class="fas fa-arrow-left"></i>
-                        Voltar ao Formulário
+                        Voltar
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- PAINEL ADMINISTRATIVO -->
+        <!-- ADMIN -->
         <div id="adminPage" class="hidden">
-            <!-- Estatísticas -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
                     <div class="stat-value" id="totalUsers">0</div>
-                    <div class="stat-label">Total de Cadastros</div>
+                    <div class="stat-label">Total Global</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-day"></i>
-                    </div>
+                    <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
                     <div class="stat-value" id="todayUsers">0</div>
                     <div class="stat-label">Cadastros Hoje</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
+                    <div class="stat-icon"><i class="fas fa-eye"></i></div>
                     <div class="stat-value" id="knowMarcelino">0%</div>
                     <div class="stat-label">Conhecem Marcelino</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
+                    <div class="stat-icon"><i class="fas fa-laptop-code"></i></div>
                     <div class="stat-value" id="usePlatform">0%</div>
                     <div class="stat-label">Usam Plataforma</div>
                 </div>
             </div>
 
-            <!-- Gráfico de Distribuição -->
             <div class="chart-container">
                 <h3 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
                     <i class="fas fa-chart-pie" style="color: var(--primary);"></i>
                     Distribuição por Ano Escolar
                 </h3>
-                <div id="chartsContent">
-                    <!-- Gráficos gerados dinamicamente -->
-                </div>
+                <div id="chartsContent"></div>
             </div>
 
-            <!-- Lista de Usuários -->
             <div class="card">
                 <div class="dashboard-header">
                     <div class="dashboard-title">
-                        <h2>Histórico de Cadastros</h2>
-                        <p>Gerencie todos os registros do sistema</p>
+                        <h2>Registros Globais</h2>
+                        <p>Sincronizados em tempo real entre todos os dispositivos</p>
                     </div>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="searchInput" placeholder="Buscar por nome..." onkeyup="filterUsers()">
+                            <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="filterUsers()">
                         </div>
                         <button class="btn btn-success" onclick="exportAllData()">
                             <i class="fas fa-download"></i>
-                            Exportar Tudo
+                            Exportar CSV
                         </button>
                         <button class="btn btn-danger" onclick="confirmReset()">
                             <i class="fas fa-trash-alt"></i>
@@ -954,121 +987,433 @@
                 </div>
 
                 <div class="tabs">
-                    <button class="tab active" onclick="switchTab('all')">
+                    <button class="tab active" onclick="switchTab('all', this)">
                         <i class="fas fa-list"></i> Todos
                     </button>
-                    <button class="tab" onclick="switchTab('today')">
+                    <button class="tab" onclick="switchTab('today', this)">
                         <i class="fas fa-calendar-day"></i> Hoje
                     </button>
-                    <button class="tab" onclick="switchTab('week')">
-                        <i class="fas fa-calendar-week"></i> Esta Semana
+                    <button class="tab" onclick="switchTab('week', this)">
+                        <i class="fas fa-calendar-week"></i> Semana
+                    </button>
+                    <button class="tab" onclick="switchTab('new', this)">
+                        <i class="fas fa-bell"></i> Novos
                     </button>
                 </div>
 
-                <div id="usersList" class="users-list">
-                    <!-- Lista preenchida via JS -->
-                </div>
+                <div id="usersList" class="users-list"></div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL DE SUCESSO -->
+    <!-- MODAIS -->
     <div id="successModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal">
             <div class="modal-icon">
                 <i class="fas fa-check"></i>
             </div>
-            <h3>Cadastro Realizado!</h3>
-            <p>Seu formulário foi enviado com sucesso. Acesse agora a loja para materiais exclusivos.</p>
+            <h3>Enviado Globalmente!</h3>
+            <p>Seu cadastro foi sincronizado em todos os dispositivos em tempo real.</p>
             <div class="modal-actions">
                 <a href="https://leozinho.erbystore.com/" target="_blank" class="btn btn-success" style="text-decoration: none;">
-                    <i class="fas fa-store"></i>
-                    Acessar Loja
+                    <i class="fas fa-store"></i> Acessar Loja
                 </a>
-                <button class="btn btn-outline" onclick="closeModalDirect()">
-                    Fechar
-                </button>
+                <button class="btn btn-outline" onclick="closeModalDirect()">Fechar</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL DE CONFIRMAÇÃO -->
     <div id="confirmModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal">
             <div class="modal-icon" style="background: linear-gradient(135deg, var(--danger), #dc2626);">
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
             <h3>Confirmar Ação</h3>
-            <p id="confirmText">Tem certeza que deseja realizar esta ação?</p>
+            <p id="confirmText">Tem certeza?</p>
             <div class="modal-actions">
-                <button class="btn btn-danger" id="confirmBtn">
-                    <i class="fas fa-check"></i>
-                    Confirmar
-                </button>
-                <button class="btn btn-outline" onclick="closeModalDirect()">
-                    Cancelar
-                </button>
+                <button class="btn btn-danger" id="confirmBtn">Confirmar</button>
+                <button class="btn btn-outline" onclick="closeModalDirect()">Cancelar</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Configurações
+        // CONFIGURAÇÃO COM SUAS CREDENCIAIS JSONBIN
         const CONFIG = {
+            // Suas credenciais do JSONBin.io
+            apiUrl: 'https://api.jsonbin.io/v3/b/67cf8e7b8561e97a50f9e3f1', // Substitua pelo seu Bin ID real
+            apiKey: '$2a$10$8FqTm3aZyGQIt5Xh1A9tk.O3l3J8O4spOggPGUHvcz6U/B1l5EwuS', // Sua X-Master-Key
+            
             adminUser: 'Marcelino',
             adminPass: 'Leonardo@24.',
-            storageKey: 'marcelino_forms_data',
-            sessionKey: 'marcelino_session'
+            syncInterval: 5000,
+            sessionKey: 'marcelino_session',
+            localBackupKey: 'marcelino_backup'
         };
 
-        let currentTab = 'all';
         let allUsers = [];
+        let currentTab = 'all';
+        let syncInterval;
+        let isSyncing = false;
+        let nomeValido = false;
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
-            loadData();
+            initSystem();
+            setupNomeValidation();
+        });
+
+        async function initSystem() {
+            loadLocalBackup();
+            await syncFromCloud();
+            startAutoSync();
             checkSession();
+            showToast('Sistema inicializado. Anti-duplicata ativo.', 'success');
+        }
+
+        // SISTEMA ANTI-DUPLICATA RIGOROSO
+        function normalizeNome(nome) {
+            if (!nome) return '';
             
-            // Verificar se há dados de outras abas/janelas
-            window.addEventListener('storage', (e) => {
-                if (e.key === CONFIG.storageKey) {
-                    loadData();
+            return nome
+                .toLowerCase()                                    // Minúsculas
+                .normalize('NFD')                                 // Remove acentos
+                .replace(/[\u0300-\u036f]/g, '')                  // Remove diacríticos
+                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')      // Remove pontuação
+                .replace(/\s+/g, '')                              // Remove todos os espaços
+                .replace(/[^\w]/g, '');                           // Remove caracteres especiais restantes
+        }
+
+        function checkDuplicate(nomeInput) {
+            const nomeDigitado = nomeInput.value.trim();
+            if (!nomeDigitado) {
+                resetValidation();
+                return;
+            }
+
+            const normalizedInput = normalizeNome(nomeDigitado);
+            
+            // Verificar contra todos os usuários cadastrados
+            const duplicate = allUsers.find(user => {
+                const normalizedExisting = normalizeNome(user.nome);
+                return normalizedExisting === normalizedInput;
+            });
+
+            const inputEl = document.getElementById('nome');
+            const errorEl = document.getElementById('nomeError');
+            const successEl = document.getElementById('nomeSuccess');
+            const warningEl = document.getElementById('duplicateWarning');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (duplicate) {
+                // Nome duplicado encontrado
+                inputEl.classList.add('error');
+                inputEl.classList.remove('success');
+                errorEl.classList.add('show');
+                successEl.classList.remove('show');
+                warningEl.classList.add('show');
+                submitBtn.disabled = true;
+                nomeValido = false;
+                
+                showToast(`Nome já cadastrado: "${duplicate.nome}"`, 'error');
+            } else {
+                // Nome disponível
+                inputEl.classList.remove('error');
+                inputEl.classList.add('success');
+                errorEl.classList.remove('show');
+                successEl.classList.add('show');
+                warningEl.classList.remove('show');
+                submitBtn.disabled = false;
+                nomeValido = true;
+            }
+        }
+
+        function resetValidation() {
+            const inputEl = document.getElementById('nome');
+            inputEl.classList.remove('error', 'success');
+            document.getElementById('nomeError').classList.remove('show');
+            document.getElementById('nomeSuccess').classList.remove('show');
+            document.getElementById('duplicateWarning').classList.remove('show');
+            document.getElementById('submitBtn').disabled = false;
+            nomeValido = false;
+        }
+
+        function setupNomeValidation() {
+            const nomeInput = document.getElementById('nome');
+            
+            // Validar em tempo real enquanto digita
+            nomeInput.addEventListener('input', (e) => {
+                // Debounce para não verificar a cada tecla
+                clearTimeout(window.validateTimeout);
+                window.validateTimeout = setTimeout(() => {
+                    checkDuplicate(e.target);
+                }, 500);
+            });
+
+            // Validar quando sair do campo
+            nomeInput.addEventListener('blur', (e) => {
+                checkDuplicate(e.target);
+            });
+        }
+
+        // SINCRONIZAÇÃO COM JSONBIN
+        async function syncFromCloud() {
+            if (isSyncing) return;
+            isSyncing = true;
+            updateSyncStatus('syncing');
+
+            try {
+                const response = await fetch(CONFIG.apiUrl + '/latest', {
+                    method: 'GET',
+                    headers: {
+                        'X-Master-Key': CONFIG.apiKey,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                const cloudData = data.record;
+
+                if (cloudData && cloudData.users) {
+                    // Detectar novos itens
+                    const newItems = detectNewItems(allUsers, cloudData.users);
+                    
+                    allUsers = cloudData.users;
+                    saveLocalBackup();
+
                     if (!document.getElementById('adminPage').classList.contains('hidden')) {
                         renderUsers();
                         updateStats();
                     }
-                    showToast('Dados atualizados em tempo real', 'success');
+
+                    if (newItems.length > 0) {
+                        showToast(`${newItems.length} novo(s) cadastro(s) detectado(s)!`, 'info');
+                        highlightNewItems(newItems);
+                    }
+
+                    updateSyncStatus('online');
                 }
-            });
+            } catch (error) {
+                console.error('Erro sync:', error);
+                updateSyncStatus('offline');
+                showToast('Modo offline - usando cache local', 'warning');
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        async function syncToCloud() {
+            if (isSyncing) return false;
+            isSyncing = true;
+            updateSyncStatus('syncing');
+
+            try {
+                const payload = {
+                    users: allUsers,
+                    lastUpdate: new Date().toISOString(),
+                    device: navigator.userAgent,
+                    version: '1.0'
+                };
+
+                const response = await fetch(CONFIG.apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'X-Master-Key': CONFIG.apiKey,
+                        'Content-Type': 'application/json',
+                        'X-Bin-Private': 'false'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                saveLocalBackup();
+                updateSyncStatus('online');
+                return true;
+            } catch (error) {
+                console.error('Erro ao salvar:', error);
+                updateSyncStatus('offline');
+                showToast('Erro ao sincronizar - salvo localmente', 'error');
+                return false;
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        function startAutoSync() {
+            syncFromCloud();
+            syncInterval = setInterval(async () => {
+                await syncFromCloud();
+            }, CONFIG.syncInterval);
+        }
+
+        function forceSync() {
+            syncFromCloud();
+            showToast('Sincronização forçada', 'info');
+        }
+
+        function updateSyncStatus(status) {
+            const el = document.getElementById('syncStatus');
+            const icons = {
+                online: 'fa-check-circle',
+                syncing: 'fa-sync fa-spin',
+                offline: 'fa-exclamation-circle'
+            };
+            const texts = {
+                online: 'Sincronizado',
+                syncing: 'Sincronizando...',
+                offline: 'Offline'
+            };
+            
+            el.className = `sync-status ${status}`;
+            el.innerHTML = `<i class="fas ${icons[status]}"></i><span>${texts[status]}</span>`;
+        }
+
+        function saveLocalBackup() {
+            localStorage.setItem(CONFIG.localBackupKey, JSON.stringify({
+                users: allUsers,
+                timestamp: new Date().toISOString()
+            }));
+        }
+
+        function loadLocalBackup() {
+            const backup = localStorage.getItem(CONFIG.localBackupKey);
+            if (backup) {
+                const data = JSON.parse(backup);
+                allUsers = data.users || [];
+            }
+        }
+
+        function detectNewItems(oldArray, newArray) {
+            if (!oldArray || oldArray.length === 0) return [];
+            const oldIds = new Set(oldArray.map(u => u.id));
+            return newArray.filter(u => !oldIds.has(u.id));
+        }
+
+        function highlightNewItems(items) {
+            setTimeout(() => {
+                items.forEach(item => {
+                    const el = document.querySelector(`[data-id="${item.id}"]`);
+                    if (el) el.classList.add('new-item');
+                });
+            }, 100);
+        }
+
+        // FORMULÁRIO COM VALIDAÇÃO ANTI-DUPLICATA
+        async function getIP() {
+            try {
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                return data.ip;
+            } catch (e) {
+                return 'Não detectado';
+            }
+        }
+
+        document.getElementById('form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Verificação final de duplicata
+            const nomeInput = document.getElementById('nome');
+            checkDuplicate(nomeInput);
+            
+            if (!nomeValido) {
+                showToast('Não é possível enviar: nome já cadastrado!', 'error');
+                nomeInput.focus();
+                return;
+            }
+
+            const btn = this.querySelector('button[type="submit"]');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sincronizando...';
+            btn.disabled = true;
+
+            try {
+                const ip = await getIP();
+                const newUser = {
+                    id: Date.now(),
+                    nome: document.getElementById('nome').value.trim(),
+                    nascimento: document.getElementById('nasc').value,
+                    ano: document.getElementById('ano').value,
+                    cmsp: document.getElementById('cmsp').value,
+                    marcelino: document.getElementById('marcelino').value,
+                    ip: ip,
+                    navegador: navigator.userAgent,
+                    plataforma: navigator.platform,
+                    horario: new Date().toISOString(),
+                    dataCadastro: new Date().toLocaleDateString('pt-BR'),
+                    deviceId: generateDeviceId()
+                };
+
+                // Verificação dupla antes de adicionar
+                const normalizedNew = normalizeNome(newUser.nome);
+                const exists = allUsers.some(u => normalizeNome(u.nome) === normalizedNew);
+                
+                if (exists) {
+                    showToast('Erro: Nome foi cadastrado por outro usuário enquanto você digitava!', 'error');
+                    checkDuplicate(nomeInput);
+                    return;
+                }
+
+                allUsers.unshift(newUser);
+                const synced = await syncToCloud();
+                
+                if (synced) {
+                    showSuccessModal();
+                    this.reset();
+                    resetValidation();
+                    showToast('Cadastro sincronizado globalmente!', 'success');
+                } else {
+                    queueFailedSync(newUser);
+                    showToast('Salvo localmente. Sincronizaremos quando possível.', 'warning');
+                }
+                
+            } catch (error) {
+                showToast('Erro ao processar cadastro', 'error');
+            } finally {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }
         });
 
-        // Sistema de Toast
+        function generateDeviceId() {
+            return 'device_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function queueFailedSync(user) {
+            setTimeout(async () => {
+                await syncToCloud();
+            }, 10000);
+        }
+
+        // UI FUNCTIONS
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
-            
             const icons = {
                 success: 'check-circle',
                 error: 'times-circle',
-                warning: 'exclamation-circle'
+                warning: 'exclamation-circle',
+                info: 'info-circle'
             };
             
-            toast.innerHTML = `
-                <i class="fas fa-${icons[type]}"></i>
-                <span>${message}</span>
-            `;
-            
+            toast.innerHTML = `<i class="fas fa-${icons[type]}"></i><span>${message}</span>`;
             container.appendChild(toast);
             
             setTimeout(() => {
                 toast.style.opacity = '0';
                 toast.style.transform = 'translateX(100%)';
                 setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            }, 4000);
         }
 
-        // Navegação
         function showForm() {
             hideAllPages();
             document.getElementById('formPage').classList.remove('hidden');
@@ -1099,15 +1444,14 @@
             });
         }
 
-        // Autenticação
         function handleLogin(e) {
             e.preventDefault();
-            const user = document.getElementById('user').value;
-            const pass = document.getElementById('pass').value;
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
 
-            if (user === CONFIG.adminUser && pass === CONFIG.adminPass) {
+            if (u === CONFIG.adminUser && p === CONFIG.adminPass) {
                 sessionStorage.setItem(CONFIG.sessionKey, 'active');
-                showToast('Login realizado com sucesso!', 'success');
+                showToast('Bem-vindo ao painel global!', 'success');
                 showAdmin();
                 document.getElementById('user').value = '';
                 document.getElementById('pass').value = '';
@@ -1128,67 +1472,195 @@
             }
         }
 
-        // Coleta de dados do formulário
-        async function getIP() {
-            try {
-                const res = await fetch('https://api.ipify.org?format=json');
-                const data = await res.json();
-                return data.ip;
-            } catch (e) {
-                return 'Não detectado';
+        // ADMIN PANEL
+        function renderUsers() {
+            const list = document.getElementById('usersList');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            
+            let filtered = allUsers.filter(u => u.nome.toLowerCase().includes(search));
+            
+            const hoje = new Date().toLocaleDateString('pt-BR');
+            if (currentTab === 'today') {
+                filtered = filtered.filter(u => u.dataCadastro === hoje);
+            } else if (currentTab === 'week') {
+                const weekAgo = new Date();
+                weekAgo.setDate(weekAgo.getDate() - 7);
+                filtered = filtered.filter(u => new Date(u.horario) >= weekAgo);
+            } else if (currentTab === 'new') {
+                const fiveMinAgo = new Date(Date.now() - 5 * 60000);
+                filtered = filtered.filter(u => new Date(u.horario) >= fiveMinAgo);
             }
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Nenhum registro</h3>
+                        <p>Os dados aparecerão aqui quando houver cadastros</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = filtered.map(user => `
+                <div class="user-item" data-id="${user.id}">
+                    <div class="user-info">
+                        <div class="user-avatar">${user.nome.charAt(0).toUpperCase()}</div>
+                        <div class="user-details">
+                            <h4>${user.nome}</h4>
+                            <span>
+                                <i class="fas fa-graduation-cap"></i> ${user.ano} | 
+                                <i class="fas fa-clock"></i> ${new Date(user.horario).toLocaleString('pt-BR')}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <button class="icon-btn" onclick="viewUser(${user.id})" title="Ver"><i class="fas fa-eye"></i></button>
+                        <button class="icon-btn" onclick="downloadUser(${user.id})" title="Download"><i class="fas fa-download"></i></button>
+                        <button class="icon-btn delete" onclick="deleteUser(${user.id})" title="Excluir"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        document.getElementById('form').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        function updateStats() {
+            document.getElementById('totalUsers').textContent = allUsers.length;
             
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-            submitBtn.disabled = true;
+            const hoje = new Date().toLocaleDateString('pt-BR');
+            document.getElementById('todayUsers').textContent = 
+                allUsers.filter(u => u.dataCadastro === hoje).length;
+            
+            const know = allUsers.filter(u => u.marcelino === 'Sim').length;
+            document.getElementById('knowMarcelino').textContent = 
+                allUsers.length ? Math.round((know / allUsers.length) * 100) + '%' : '0%';
+            
+            const plat = allUsers.filter(u => u.cmsp !== 'Nenhum').length;
+            document.getElementById('usePlatform').textContent = 
+                allUsers.length ? Math.round((plat / allUsers.length) * 100) + '%' : '0%';
 
-            try {
-                const ip = await getIP();
-                const formData = {
-                    id: Date.now(),
-                    nome: document.getElementById('nome').value.trim(),
-                    nascimento: document.getElementById('nasc').value,
-                    ano: document.getElementById('ano').value,
-                    cmsp: document.getElementById('cmsp').value,
-                    marcelino: document.getElementById('marcelino').value,
-                    ip: ip,
-                    navegador: navigator.userAgent,
-                    plataforma: navigator.platform,
-                    horario: new Date().toISOString(),
-                    dataCadastro: new Date().toLocaleDateString('pt-BR')
-                };
+            const anos = {};
+            allUsers.forEach(u => anos[u.ano] = (anos[u.ano] || 0) + 1);
+            const total = allUsers.length;
+            
+            document.getElementById('chartsContent').innerHTML = 
+                Object.entries(anos).map(([ano, count]) => `
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span>${ano}</span>
+                            <span style="color: var(--text-secondary);">${count} (${Math.round((count/total)*100)}%)</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${(count/total)*100}%"></div>
+                        </div>
+                    </div>
+                `).join('');
+        }
 
-                // Salvar no localStorage (sincronizado entre dispositivos via mesmo domínio)
-                let users = JSON.parse(localStorage.getItem(CONFIG.storageKey) || '[]');
-                users.unshift(formData); // Adiciona no início
-                localStorage.setItem(CONFIG.storageKey, JSON.stringify(users));
-                
-                // Disparar evento para outras abas
-                window.dispatchEvent(new StorageEvent('storage', {
-                    key: CONFIG.storageKey,
-                    newValue: JSON.stringify(users)
-                }));
+        function switchTab(tab, btn) {
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            renderUsers();
+        }
 
-                showSuccessModal();
-                this.reset();
-                
-            } catch (error) {
-                showToast('Erro ao enviar formulário', 'error');
-            } finally {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        });
+        function filterUsers() {
+            renderUsers();
+        }
 
-        // Modal de Sucesso
+        async function deleteUser(id) {
+            showConfirm('Excluir este registro permanentemente?', async () => {
+                allUsers = allUsers.filter(u => u.id !== id);
+                await syncToCloud();
+                renderUsers();
+                updateStats();
+                showToast('Registro excluído globalmente', 'success');
+            });
+        }
+
+        async function confirmReset() {
+            showConfirm('APAGAR TODOS OS DADOS GLOBAIS?', async () => {
+                allUsers = [];
+                await syncToCloud();
+                renderUsers();
+                updateStats();
+                showToast('Todos os dados apagados', 'success');
+            });
+        }
+
+        function viewUser(id) {
+            const u = allUsers.find(x => x.id === id);
+            if (!u) return;
+            
+            alert(`
+Nome: ${u.nome}
+Nascimento: ${u.nascimento}
+Ano: ${u.ano}
+Plataforma: ${u.cmsp}
+Conhece Marcelino: ${u.marcelino}
+IP: ${u.ip}
+Dispositivo: ${u.plataforma}
+Data: ${new Date(u.horario).toLocaleString('pt-BR')}
+            `);
+        }
+
+        function downloadUser(id) {
+            const u = allUsers.find(x => x.id === id);
+            if (!u) return;
+            
+            const content = `=== CADASTRO MARCELINO ===
+Nome: ${u.nome}
+Data Nasc.: ${u.nascimento}
+Ano: ${u.ano}
+Plataforma: ${u.cmsp}
+Conhece Marcelino: ${u.marcelino}
+
+IP: ${u.ip}
+Navegador: ${u.navegador}
+SO: ${u.plataforma}
+Data: ${new Date(u.horario).toLocaleString('pt-BR')}
+ID: ${u.id}
+            `;
+            
+            const blob = new Blob([content], {type: 'text/plain'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cadastro_${u.nome.replace(/\s+/g, '_')}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportAllData() {
+            if (!allUsers.length) return showToast('Nenhum dado', 'warning');
+            
+            const csv = [
+                ['Nome', 'Nascimento', 'Ano', 'Plataforma', 'Conhece', 'IP', 'Data'].join(','),
+                ...allUsers.map(u => [
+                    `"${u.nome}"`, u.nascimento, u.ano, u.cmsp, u.marcelino, u.ip,
+                    new Date(u.horario).toLocaleString('pt-BR')
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob(['\ufeff' + csv], {type: 'text/csv'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `marcelino_global_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            
+            showToast('Exportação concluída', 'success');
+        }
+
+        function showConfirm(text, onConfirm) {
+            document.getElementById('confirmText').textContent = text;
+            document.getElementById('confirmModal').classList.add('active');
+            document.getElementById('confirmBtn').onclick = () => {
+                onConfirm();
+                closeModalDirect();
+            };
+        }
+
         function showSuccessModal() {
-            const modal = document.getElementById('successModal');
-            modal.classList.add('active');
+            document.getElementById('successModal').classList.add('active');
         }
 
         function closeModal(e) {
@@ -1201,257 +1673,8 @@
             document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
         }
 
-        // Gerenciamento de Dados
-        function loadData() {
-            allUsers = JSON.parse(localStorage.getItem(CONFIG.storageKey) || '[]');
-        }
-
-        function renderUsers() {
-            const list = document.getElementById('usersList');
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            let filtered = allUsers.filter(u => 
-                u.nome.toLowerCase().includes(searchTerm)
-            );
-
-            // Filtrar por tab
-            const hoje = new Date().toLocaleDateString('pt-BR');
-            if (currentTab === 'today') {
-                filtered = filtered.filter(u => u.dataCadastro === hoje);
-            } else if (currentTab === 'week') {
-                const weekAgo = new Date();
-                weekAgo.setDate(weekAgo.getDate() - 7);
-                filtered = filtered.filter(u => new Date(u.horario) >= weekAgo);
-            }
-
-            if (filtered.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>Nenhum registro encontrado</h3>
-                        <p>Os dados aparecerão aqui quando houver cadastros</p>
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = filtered.map(user => `
-                <div class="user-item">
-                    <div class="user-info">
-                        <div class="user-avatar">
-                            ${user.nome.charAt(0).toUpperCase()}
-                        </div>
-                        <div class="user-details">
-                            <h4>${user.nome}</h4>
-                            <span>
-                                <i class="fas fa-graduation-cap"></i> ${user.ano} | 
-                                <i class="fas fa-clock"></i> ${new Date(user.horario).toLocaleString('pt-BR')}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="user-actions">
-                        <button class="icon-btn" onclick="viewUser(${user.id})" title="Visualizar">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="icon-btn" onclick="downloadUser(${user.id})" title="Download">
-                            <i class="fas fa-download"></i>
-                        </button>
-                        <button class="icon-btn delete" onclick="deleteUser(${user.id})" title="Excluir">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function updateStats() {
-            document.getElementById('totalUsers').textContent = allUsers.length;
-            
-            const hoje = new Date().toLocaleDateString('pt-BR');
-            const todayCount = allUsers.filter(u => u.dataCadastro === hoje).length;
-            document.getElementById('todayUsers').textContent = todayCount;
-            
-            const knowCount = allUsers.filter(u => u.marcelino === 'Sim').length;
-            const knowPercent = allUsers.length > 0 ? Math.round((knowCount / allUsers.length) * 100) : 0;
-            document.getElementById('knowMarcelino').textContent = knowPercent + '%';
-            
-            const platformCount = allUsers.filter(u => u.cmsp !== 'Nenhum').length;
-            const platformPercent = allUsers.length > 0 ? Math.round((platformCount / allUsers.length) * 100) : 0;
-            document.getElementById('usePlatform').textContent = platformPercent + '%';
-
-            // Gerar gráfico de distribuição
-            renderCharts();
-        }
-
-        function renderCharts() {
-            const anos = {};
-            allUsers.forEach(u => {
-                anos[u.ano] = (anos[u.ano] || 0) + 1;
-            });
-
-            const total = allUsers.length;
-            const container = document.getElementById('chartsContent');
-            
-            container.innerHTML = Object.entries(anos).map(([ano, count]) => {
-                const percent = Math.round((count / total) * 100);
-                return `
-                    <div style="margin-bottom: 1rem;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                            <span>${ano}</span>
-                            <span style="color: var(--text-secondary);">${count} (${percent}%)</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${percent}%"></div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Ações dos usuários
-        function viewUser(id) {
-            const user = allUsers.find(u => u.id === id);
-            if (!user) return;
-
-            const details = `
-Nome: ${user.nome}
-Nascimento: ${user.nascimento}
-Ano Escolar: ${user.ano}
-Plataforma: ${user.cmsp}
-Conhece Marcelino: ${user.marcelino}
-IP: ${user.ip}
-Navegador: ${user.navegador}
-Plataforma: ${user.plataforma}
-Data/Hora: ${new Date(user.horario).toLocaleString('pt-BR')}
-            `;
-
-            alert(details);
-        }
-
-        function downloadUser(id) {
-            const user = allUsers.find(u => u.id === id);
-            if (!user) return;
-
-            const content = `
-=== DADOS DO CADASTRO ===
-Nome: ${user.nome}
-Data de Nascimento: ${user.nascimento}
-Ano Escolar: ${user.ano}
-Plataforma: ${user.cmsp}
-Conhece o Marcelino: ${user.marcelino}
-
-=== DADOS TÉCNICOS ===
-IP: ${user.ip}
-Navegador: ${user.navegador}
-Sistema Operacional: ${user.plataforma}
-Data do Cadastro: ${new Date(user.horario).toLocaleString('pt-BR')}
-ID do Registro: ${user.id}
-            `;
-
-            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `cadastro_${user.nome.replace(/\s+/g, '_')}.txt`;
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            showToast('Download iniciado', 'success');
-        }
-
-        function deleteUser(id) {
-            showConfirm('Tem certeza que deseja excluir este registro?', () => {
-                allUsers = allUsers.filter(u => u.id !== id);
-                saveData();
-                renderUsers();
-                updateStats();
-                showToast('Registro excluído', 'success');
-            });
-        }
-
-        function exportAllData() {
-            if (allUsers.length === 0) {
-                showToast('Nenhum dado para exportar', 'warning');
-                return;
-            }
-
-            const csvContent = [
-                ['Nome', 'Nascimento', 'Ano', 'Plataforma', 'Conhece Marcelino', 'IP', 'Data/Hora'].join(','),
-                ...allUsers.map(u => [
-                    `"${u.nome}"`,
-                    u.nascimento,
-                    u.ano,
-                    u.cmsp,
-                    u.marcelino,
-                    u.ip,
-                    new Date(u.horario).toLocaleString('pt-BR')
-                ].join(','))
-            ].join('\n');
-
-            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `cadastros_marcelino_${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            showToast('Exportação concluída', 'success');
-        }
-
-        function confirmReset() {
-            showConfirm('ATENÇÃO: Todos os dados serão permanentemente excluídos. Continuar?', () => {
-                localStorage.removeItem(CONFIG.storageKey);
-                allUsers = [];
-                renderUsers();
-                updateStats();
-                showToast('Todos os dados foram apagados', 'success');
-            });
-        }
-
-        function showConfirm(text, onConfirm) {
-            document.getElementById('confirmText').textContent = text;
-            const modal = document.getElementById('confirmModal');
-            modal.classList.add('active');
-            
-            const btn = document.getElementById('confirmBtn');
-            btn.onclick = () => {
-                onConfirm();
-                closeModalDirect();
-            };
-        }
-
-        function saveData() {
-            localStorage.setItem(CONFIG.storageKey, JSON.stringify(allUsers));
-            window.dispatchEvent(new StorageEvent('storage', {
-                key: CONFIG.storageKey,
-                newValue: JSON.stringify(allUsers)
-            }));
-        }
-
-        // Utilitários
-        function filterUsers() {
-            renderUsers();
-        }
-
-        function switchTab(tab) {
-            currentTab = tab;
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.closest('.tab').classList.add('active');
-            renderUsers();
-        }
-
-        function toggleTheme() {
-            // Implementação básica de tema (pode ser expandida)
-            document.body.classList.toggle('light-theme');
-        }
-
-        // Prevenir acesso direto ao admin
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                // Permitir ferramentas de desenvolvedor, mas logar
-                console.log('Ferramentas de desenvolvedor detectadas');
-            }
+        window.addEventListener('beforeunload', () => {
+            if (syncInterval) clearInterval(syncInterval);
         });
     </script>
 </body>
