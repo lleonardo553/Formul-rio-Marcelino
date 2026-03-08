@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Formulário Marcelino</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+margin:0;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+color:white;
+min-height:100vh;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:#020617;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
+button{
+padding:10px 16px;
+border:none;
+border-radius:8px;
+background:#3b82f6;
+color:white;
+cursor:pointer;
+font-weight:600;
+}
+
+button:hover{
+background:#2563eb;
+}
+
+.container{
+max-width:650px;
+margin:auto;
+padding:40px 20px;
+}
+
+.card{
+background:#1e293b;
+padding:30px;
+border-radius:14px;
+box-shadow:0 10px 40px rgba(0,0,0,0.4);
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:6px;
+margin-bottom:16px;
+border-radius:8px;
+border:none;
+}
+
+.hidden{
+display:none;
+}
+
+.userItem{
+background:#334155;
+padding:12px;
+margin:8px 0;
+border-radius:8px;
+cursor:pointer;
+}
+
+.userItem:hover{
+background:#475569;
+}
+
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.popupBox{
+background:#1e293b;
+padding:30px;
+border-radius:12px;
+text-align:center;
+max-width:400px;
+}
+
+.popupBox a{
+display:inline-block;
+margin-top:15px;
+background:#22c55e;
+padding:12px 20px;
+border-radius:8px;
+text-decoration:none;
+color:white;
+font-weight:600;
+}
+
+.popupBox a:hover{
+background:#16a34a;
+}
+
+.resetBtn{
+background:#ef4444;
+margin-bottom:15px;
+}
+
+.resetBtn:hover{
+background:#dc2626;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">Formulário Marcelino</div>
+<button onclick="openLogin()">ADM</button>
+</header>
+
+<div class="container">
+
+<!-- FORMULARIO -->
+
+<div id="formPage" class="card">
+
+<h2>Cadastro</h2>
+
+<form id="form">
+
+<label>Nome completo</label>
+<input id="nome" required>
+
+<label>Data de nascimento</label>
+<input type="date" id="nasc" required>
+
+<label>Qual ano escolar?</label>
+<select id="ano">
+<option>6º ano</option>
+<option>7º ano</option>
+<option>8º ano</option>
+<option>9º ano</option>
+<option>1º EM</option>
+<option>2º EM</option>
+<option>3º EM</option>
+</select>
+
+<label>Usa Sala do Futuro ou CMSP?</label>
+<select id="cmsp">
+<option>Sala do Futuro</option>
+<option>CMSP</option>
+<option>Nenhum</option>
+</select>
+
+<label>Conhece o Marcelino?</label>
+<select id="marcelino">
+<option>Sim</option>
+<option>Não</option>
+</select>
+
+<button type="submit">Enviar</button>
+
+</form>
+
+</div>
+
+<!-- LOGIN -->
+
+<div id="loginPage" class="card hidden">
+
+<h2>Login ADM</h2>
+
+<input id="user" placeholder="Usuário">
+<input id="pass" type="password" placeholder="Senha">
+
+<button onclick="login()">Entrar</button>
+
+</div>
+
+<!-- PAINEL ADM -->
+
+<div id="adminPage" class="card hidden">
+
+<h2>Painel ADM</h2>
+
+<button class="resetBtn" onclick="resetarHistorico()">Resetar Histórico</button>
+
+<div id="lista"></div>
+
+</div>
+
+</div>
+
+<!-- POPUP LOJA -->
+
+<div id="popup" class="popup">
+
+<div class="popupBox">
+
+<h3>Formulário enviado 🎉</h3>
+
+<p>Quer acessar PDFs respondidos e outros materiais?</p>
+
+<a href="https://leozinho.erbystore.com/" target="_blank">
+Acessar Loja do Marcelino
+</a>
+
+<br><br>
+
+<button onclick="fecharPopup()">Fechar</button>
+
+</div>
+
+</div>
+
+<script>
+
+async function getIP(){
+
+let res = await fetch("https://api.ipify.org?format=json")
+let data = await res.json()
+
+return data.ip
+
+}
+
+document.getElementById("form").addEventListener("submit", async function(e){
+
+e.preventDefault()
+
+let ip = await getIP()
+
+let dados = {
+
+nome:document.getElementById("nome").value,
+nascimento:document.getElementById("nasc").value,
+ano:document.getElementById("ano").value,
+cmsp:document.getElementById("cmsp").value,
+marcelino:document.getElementById("marcelino").value,
+
+ip:ip,
+navegador:navigator.userAgent,
+horario:new Date().toLocaleString()
+
+}
+
+let lista = JSON.parse(localStorage.getItem("usuarios") || "[]")
+
+lista.push(dados)
+
+localStorage.setItem("usuarios", JSON.stringify(lista))
+
+document.getElementById("popup").style.display = "flex"
+
+})
+
+function fecharPopup(){
+
+document.getElementById("popup").style.display = "none"
+
+}
+
+function openLogin(){
+
+document.getElementById("formPage").classList.add("hidden")
+document.getElementById("loginPage").classList.remove("hidden")
+
+}
+
+function login(){
+
+let u = document.getElementById("user").value
+let p = document.getElementById("pass").value
+
+if(u=="Marcelino" && p=="Leonardo@24."){
+
+document.getElementById("loginPage").classList.add("hidden")
+document.getElementById("adminPage").classList.remove("hidden")
+
+loadUsers()
+
+}else{
+
+alert("Login incorreto")
+
+}
+
+}
+
+function loadUsers(){
+
+let lista = JSON.parse(localStorage.getItem("usuarios") || "[]")
+
+let div = document.getElementById("lista")
+
+div.innerHTML = ""
+
+lista.forEach((u)=>{
+
+let el = document.createElement("div")
+
+el.className = "userItem"
+
+el.innerText = u.nome
+
+el.onclick = ()=>downloadInfo(u)
+
+div.appendChild(el)
+
+})
+
+}
+
+function downloadInfo(u){
+
+let text = `
+
+Nome: ${u.nome}
+Nascimento: ${u.nascimento}
+Ano escolar: ${u.ano}
+CMSP: ${u.cmsp}
+Conhece Marcelino: ${u.marcelino}
+
+IP: ${u.ip}
+Navegador: ${u.navegador}
+Horário: ${u.horario}
+
+`
+
+let blob = new Blob([text],{type:"text/plain"})
+
+let a = document.createElement("a")
+
+a.href = URL.createObjectURL(blob)
+
+a.download = u.nome + ".txt"
+
+a.click()
+
+}
+
+function resetarHistorico(){
+
+let confirmar = confirm("Tem certeza que deseja apagar TODOS os formulários?")
+
+if(confirmar){
+
+localStorage.removeItem("usuarios")
+
+document.getElementById("lista").innerHTML=""
+
+alert("Histórico apagado.")
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
